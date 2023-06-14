@@ -1,0 +1,174 @@
+/* font set up */
+
+@font-face {
+  font-family: "Verlag Book";
+  src: local("Verlag-Book"), url(./fonts/Verlag-Book.otf) format("opentype");
+}
+
+@font-face {
+  font-family: "Verlag Black";
+  src: local("Verlag-Black"), url(./fonts/Verlag-Black.otf) format("opentype");
+}
+
+@font-face {
+  font-family: "Verlag Bold";
+  src: local("Verlag-Bold"), url(./fonts/Verlag-Bold.otf) format("opentype");
+}
+
+@font-face {
+  font-family: "Verlag Condensed Book";
+  src: local("Verlag-Condensed-Book"),
+    url(./fonts/VerlagCondensed-Book.otf) format("opentype");
+}
+
+@font-face {
+  font-family: "Verlag Light";
+  src: local("Verlag-Light"), url(./fonts/Verlag-Light.otf) format("opentype");
+}
+
+@font-face {
+  font-family: "Verlag Extra Light";
+  src: local("Verlag-XLight"), url(./fonts/Verlag-XLight.otf) format("opentype");
+}
+@font-face {
+  font-family: "Kigers";
+  src: local("kigers"), url(./fonts/kigers.otf) format("opentype");
+}
+
+/* CSS resets */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color-primary-100: hsl(23, 93%, 76%);
+  --color-primary-300: hsl(23, 96%, 48%);
+  --color-primary-700: hsl(23, 96%, 20%);
+  --color-secondary-100: hsl(48, 100%, 96%);
+  --color-secondary-300: hsl(48, 100%, 96%);
+  --color-secondary-700: hsl(48, 100%, 28%);
+  --color-alternate-100: hsl(226, 82%, 72%);
+  --color-alternate-300: hsl(226, 82%, 52%);
+  --color-alternate-700: hsl(226, 82%, 28%);
+  --color-label: hsl(30, 20%, 96%);
+  --color-text: hsl(0, 0%, 52%);
+  --color-disabled: hsl(0, 0%, 84%);
+  --color-error-100: hsl(357, 76%, 80%);
+  --color-error-300: hsl(357, 76%, 48%);
+  --color-success-100: hsl(146, 90%, 72%);
+  --color-success-300: hsl(146, 90%, 36%);
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 2.5rem;
+  --space-6: 3rem;
+  --space-7: 4rem;
+  --space-8: 5rem;
+  --space-9: 6rem;
+  --space-10: 7rem;
+  --font-length-sm1: 0.25rem;
+  --font-length-sm2: 0.5rem;
+  --font-length-sm3: 0.75rem;
+  --font-length-md1: 1rem;
+  --font-length-md2: 1.25rem;
+  --font-length-md3: 1.5rem;
+  --font-length-lg1: 2rem;
+  --font-length-lg2: 3rem;
+  --font-length-lg3: 4rem;
+  --font-length-xl1: 7rem;
+  --font-length-xl2: 9rem;
+  --font-length-xl3: 11rem;
+}
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+html,
+body {
+  height: 100%;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  border: none;
+  padding: var(--space-1) var(--space-3);
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+#root {
+  isolation: isolate;
+}
+
+/* general styles */
+#app-wrapper {
+  height: 100%;
+}
+.main-wrapper {
+  height: 100%;
+}
+body {
+  font-family: "Verlag Book", monospace;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Verlag Bold";
+  color: var(--color-primary-300);
+  /* #da0711; */
+}
+
+p {
+  font-family: "Verlag Book", monospace;
+  font-size: 1.5rem;
+  color: #1266e2;
+}
+
+.logoText {
+  margin-left: auto;
+  margin-right: auto;
+  font-family: "Kigers";
+  color: #f06105;
+  font-size: var(--font-length-md3);
+  text-align: center;
+  padding: var(--space-1);
+}
+
+.logo-wrapper {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background-color: var(--color-primary-100);
+}
