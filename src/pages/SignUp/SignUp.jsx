@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { signUpUser } from "../../../backend/controllers/login.controller";
 import styles from "./SignUp.module.css";
 const SignUp = () => {
@@ -22,7 +22,14 @@ const SignUp = () => {
         lastName: formData?.lastName,
       });
       if (success) {
-        console.log({ data });
+        // console.log({ dataFE: data });
+        // localStorage.setItem(
+        //   "loggedinUser",
+        //   JSON.stringify({
+        //     token: data?.session.sccess_token,
+        //     userId: data?.user.id,
+        //   })
+        // );
       }
       if (error) {
         console.log(error);
@@ -43,7 +50,7 @@ const SignUp = () => {
         className={styles.signUpFormWrapper}
       >
         <div className={styles.signUpFormItem}>
-          <label htmlFor="firstName">First name: </label>
+          <label htmlFor="firstName">first name: </label>
           <input
             type="text"
             id="firstName"
@@ -52,7 +59,7 @@ const SignUp = () => {
           />
         </div>
         <div className={styles.signUpFormItem}>
-          <label htmlFor="lastName">Last name: </label>
+          <label htmlFor="lastName">last name: </label>
           <input
             type="text"
             id="lastName"
@@ -62,7 +69,7 @@ const SignUp = () => {
         </div>
 
         <div className={styles.signUpFormItem}>
-          <label htmlFor="phoneNo">Phone: </label>
+          <label htmlFor="phoneNo">phone: </label>
           <input
             type="phone"
             id="phoneNo"
@@ -96,8 +103,8 @@ const SignUp = () => {
 
         {errors.password && <p>{errors.password?.message}</p>}
         <button type="submit">submit</button>
+        <NavLink to="/login">login page</NavLink>
       </form>
-      <button onClick={cancelBtnClickHandler}>login page</button>
     </div>
   );
 };
