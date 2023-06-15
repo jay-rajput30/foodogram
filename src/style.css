@@ -150,7 +150,20 @@ h6 {
   color: var(--color-primary-300);
   /* #da0711; */
 }
-
+label {
+  color: var(--color-secondary-700);
+}
+input {
+  border: 2px solid var(--color-secondary-700);
+}
+input::placeholder {
+  color: var(--color-secondary-700);
+}
+button {
+  background-color: var(--color-alternate-300);
+  color: var(--color-secondary-100);
+  border-radius: 5px;
+}
 p {
   font-family: "Verlag Book", monospace;
   font-size: 1.5rem;
@@ -171,5 +184,5 @@ p {
   width: 100%;
   position: fixed;
   top: 0;
-  /* background-color: var(--color-primary-100); */
+  background-color: var(--color-primary-100);
 }

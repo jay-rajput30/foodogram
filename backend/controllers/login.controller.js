@@ -32,3 +32,18 @@ export const signUpUser = async (userDetails) => {
     return { success: false, data: null, error: e };
   }
 };
+
+export const getLoginCredentials = async (userDetails) => {
+  try {
+    let { data, error } = await supabase.auth.signInWithPassword({
+      email: userDetails.email,
+      password: userDetails.password,
+    });
+    if (!error) {
+      console.log({ loginData: data });
+      // return { success: true, data: data, error: null };
+    }
+  } catch (e) {
+    return { success: false, data: null, error: e };
+  }
+};

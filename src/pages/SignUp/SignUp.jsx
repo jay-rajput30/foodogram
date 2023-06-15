@@ -22,6 +22,7 @@ const SignUp = () => {
         lastName: formData?.lastName,
       });
       if (success) {
+        navigate("/");
         // console.log({ dataFE: data });
         // localStorage.setItem(
         //   "loggedinUser",
