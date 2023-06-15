@@ -40,8 +40,20 @@ export const getLoginCredentials = async (userDetails) => {
       password: userDetails.password,
     });
     if (!error) {
-      console.log({ loginData: data });
-      // return { success: true, data: data, error: null };
+      // console.log({
+      //   email: data.session.user.email,
+      //   userId: data.session.user.id,
+      //   token: data.session.access_token,
+      // });
+      return {
+        success: true,
+        data: {
+          email: data.session.user.email,
+          userId: data.session.user.id,
+          token: data.session.access_token,
+        },
+        error: null,
+      };
     }
   } catch (e) {
     return { success: false, data: null, error: e };

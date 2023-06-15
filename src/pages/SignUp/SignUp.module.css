@@ -7,9 +7,12 @@
   justify-content: center;
   background-color: var(--color-secondary-300);
   border: 2px solid var(--color-secondary-700);
-  width: 99%;
+  width: 95%;
   padding: var(--space-1) 0;
   border-radius: 5px;
+  box-shadow: 1px 2px 2px var(--color-secondary-700),
+    2px 3px 3px var(--color-secondary-700);
+  margin-top: var(--space-7);
 }
 
 .signUpWrapper {
@@ -48,7 +51,5 @@
 
   .signUpFormWrapper {
     border-radius: 5px;
-    box-shadow: 1px 2px 2px var(--color-secondary-700),
-      2px 3px 3px var(--color-secondary-700);
   }
 }

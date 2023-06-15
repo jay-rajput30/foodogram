@@ -112,7 +112,7 @@ textarea,
 select {
   font: inherit;
   border: none;
-  padding: var(--space-1) var(--space-3);
+  padding: 0.3rem var(--space-2);
   border-radius: 4px;
 }
 

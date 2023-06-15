@@ -1,8 +1,8 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Login from "./pages/Login/Login";
-import HomePage from "./pages/HomePage/HomePage";
 import SignUp from "./pages/SignUp/SignUp";
+import Feed from "./pages/Feed/Feed";
 
 const App = () => {
   return (
@@ -12,7 +12,7 @@ const App = () => {
       </div>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/home" element={<HomePage />} />
+        <Route path="/feed" element={<Feed />} />
         <Route path="/signup" element={<SignUp />} />
       </Routes>
     </div>
