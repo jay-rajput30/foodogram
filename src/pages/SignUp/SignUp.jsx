@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signUpUser } from "../../../backend/controllers/login.controller";
 import styles from "./SignUp.module.css";
 const SignUp = () => {
@@ -22,14 +22,7 @@ const SignUp = () => {
         lastName: formData?.lastName,
       });
       if (success) {
-        // console.log({ dataFE: data });
-        // localStorage.setItem(
-        //   "loggedinUser",
-        //   JSON.stringify({
-        //     token: data?.session.sccess_token,
-        //     userId: data?.user.id,
-        //   })
-        // );
+        navigate("/");
       }
       if (error) {
         console.log(error);
@@ -44,7 +37,6 @@ const SignUp = () => {
   };
   return (
     <div className={styles.signUpWrapper}>
-      <h1>sign up</h1>
       <form
         onSubmit={handleSubmit(formSubmitHandler)}
         className={styles.signUpFormWrapper}
@@ -54,7 +46,7 @@ const SignUp = () => {
           <input
             type="text"
             id="firstName"
-            placeholder="first name"
+            placeholder="enter first name"
             {...register("firstName")}
           />
         </div>
@@ -63,7 +55,7 @@ const SignUp = () => {
           <input
             type="text"
             id="lastName"
-            placeholder="last name"
+            placeholder="enter last name"
             {...register("lastName")}
           />
         </div>
@@ -73,7 +65,7 @@ const SignUp = () => {
           <input
             type="phone"
             id="phoneNo"
-            placeholder="phone number"
+            placeholder="enter phone number"
             {...register("phoneNo")}
           />
         </div>
@@ -83,7 +75,7 @@ const SignUp = () => {
           <input
             type="email"
             id="email"
-            placeholder="email"
+            placeholder="enter email"
             {...register("email", { required: "Email id is required" })}
           />
         </div>
@@ -94,7 +86,7 @@ const SignUp = () => {
           <input
             type="password"
             id="password"
-            placeholder="password"
+            placeholder="enter password"
             {...register("password", {
               required: "password is required",
             })}
@@ -103,7 +95,7 @@ const SignUp = () => {
 
         {errors.password && <p>{errors.password?.message}</p>}
         <button type="submit">submit</button>
-        <NavLink to="/login">login page</NavLink>
+        <Link to="/">login page</Link>
       </form>
     </div>
   );

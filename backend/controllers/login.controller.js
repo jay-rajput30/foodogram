@@ -32,3 +32,30 @@ export const signUpUser = async (userDetails) => {
     return { success: false, data: null, error: e };
   }
 };
+
+export const getLoginCredentials = async (userDetails) => {
+  try {
+    let { data, error } = await supabase.auth.signInWithPassword({
+      email: userDetails.email,
+      password: userDetails.password,
+    });
+    if (!error) {
+      // console.log({
+      //   email: data.session.user.email,
+      //   userId: data.session.user.id,
+      //   token: data.session.access_token,
+      // });
+      return {
+        success: true,
+        data: {
+          email: data.session.user.email,
+          userId: data.session.user.id,
+          token: data.session.access_token,
+        },
+        error: null,
+      };
+    }
+  } catch (e) {
+    return { success: false, data: null, error: e };
+  }
+};
