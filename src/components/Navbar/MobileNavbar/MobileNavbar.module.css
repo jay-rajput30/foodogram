@@ -1,0 +1,19 @@
+.mobileNavbarWrapper {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  border: 2px solid var(--color-primary-700);
+  padding: var(--space-1) var(--space-2);
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--color-primary-100);
+  box-shadow: -2px -4px 4px var(--color-primary-700);
+}
+.mobileNavbarWrapper > * {
+  cursor: pointer;
+}
+@media screen and (min-width: 768px) {
+  .mobileNavbarWrapper {
+    display: none;
+  }
+}
