@@ -1,0 +1,5 @@
+.feedWrapper {
+  height: 100%;
+  margin-top: var(--space-7);
+  display: flex;
+}
