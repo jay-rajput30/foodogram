@@ -22,6 +22,7 @@ const App = () => {
         <Route path="/bookmark" element={<Bookmark />} />
         <Route path="/profile" elemen={<Profile />} />
         <Route path="/profile/:id" element={<Profile />} />
+        <Route path="signup" element={<SignUp />} />
       </Routes>
     </div>
   );
