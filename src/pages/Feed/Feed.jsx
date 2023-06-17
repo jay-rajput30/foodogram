@@ -8,10 +8,13 @@ import { Folder } from "react-feather";
 import { useAuth } from "../../context/AuthProvider";
 import { createPost } from "../../../backend/controllers/post.controller";
 import { supabase } from "../../../backend/db/db.connect";
+import { postFileUploadChangeHandler } from "./Feed.helpers";
+import { usePost } from "../../context/PostProvider";
 
 const Feed = () => {
   const location = useLocation();
   const { userLoginDetails } = useAuth();
+  const { userPosts, setPostToggle } = usePost();
   const [newPostDetails, setNewPostDetails] = useState({
     userId: userLoginDetails?.userId,
     text: "",
@@ -33,28 +36,11 @@ const Feed = () => {
           comments: [],
           postImgUrl: null,
         });
+        setPostToggle((prev) => !prev);
       }
     }
   };
-
-  const postFileUploadChangeHandler = async (e) => {
-    console.log({ target: e.target.files[0] });
-    const postImage = e.target.files[0];
-    const { data, error } = await supabase.storage
-      .from("posts")
-      .upload(
-        `${e.target.files[0]?.name}-${userLoginDetails.userId}.${
-          e.target.files[0]?.type.split("/")[1]
-        }`,
-        postImage
-      );
-    if (!error) {
-      setNewPostDetails({
-        ...newPostDetails,
-        postImgUrl: data?.path,
-      });
-    }
-  };
+  console.log({ userPosts });
 
   return (
     <div className={styles.feedWrapper}>
@@ -74,7 +60,9 @@ const Feed = () => {
               <input
                 type="file"
                 id="upload-post"
-                onChange={postFileUploadChangeHandler}
+                onChange={(e) =>
+                  postFileUploadChangeHandler(e, setNewPostDetails)
+                }
               />
               <label htmlFor="upload-post">
                 <Folder fill="hsl(23, 49%, 35%)" />
