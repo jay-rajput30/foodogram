@@ -1,76 +1,59 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Feed.module.css";
 import MobileNavbar from "../../components/Navbar/MobileNavbar/MobileNavbar";
 import { useLocation } from "react-router";
 import { checkPageLocation } from "../../utils/utls,";
 import DesktopNavbar from "../../components/Navbar/DesktopNavbar/DesktopNavbar";
-import { Folder } from "react-feather";
 import { useAuth } from "../../context/AuthProvider";
-import { createPost } from "../../../backend/controllers/post.controller";
 import { supabase } from "../../../backend/db/db.connect";
-import { postFileUploadChangeHandler } from "./Feed.helpers";
 import { usePost } from "../../context/PostProvider";
+import NewPost from "./NewPost/NewPost";
+import PostCard from "../../components/Card/PostCard/PostCard";
 
 const Feed = () => {
   const location = useLocation();
   const { userLoginDetails } = useAuth();
-  const { userPosts, setPostToggle } = usePost();
-  const [newPostDetails, setNewPostDetails] = useState({
-    userId: userLoginDetails?.userId,
-    text: "",
-    likes: [],
-    comments: [],
-    postImgUrl: null,
-  });
+  const { userPosts, setUserPost, postToggle, setAllPosts } = usePost();
+
   const checkPath = checkPageLocation(location.pathname);
 
-  const postBtnClickHandler = async () => {
-    if (newPostDetails) {
-      const { success, data } = await createPost(newPostDetails);
-      if (success) {
-        console.log({ feedData: data });
-        setNewPostDetails({
-          userId: userLoginDetails?.userId,
-          text: "",
-          likes: [],
-          comments: [],
-          postImgUrl: null,
-        });
-        setPostToggle((prev) => !prev);
+  const fetchPosts = async () => {
+    try {
+      const { data: allPostsData, allPostsError } = await supabase
+        .from("posts")
+        .select("*");
+      const { data, error } = await supabase
+        .from("profile")
+        .select()
+        .eq("userId", userLoginDetails?.userId);
+
+      const { data: postData, postError } = await supabase
+        .from("posts")
+        .select()
+        .in("userId", [...data[0].following, userLoginDetails?.userId]);
+      if (!postError && !error && !allPostsError) {
+        setUserPost(postData);
+        setAllPosts(allPostsData);
       }
+    } catch (e) {
+      console.log(e);
     }
   };
-  console.log({ userPosts });
+  useEffect(() => {
+    fetchPosts();
+  }, [postToggle]);
 
   return (
     <div className={styles.feedWrapper}>
       {!checkPath && <MobileNavbar />}
       {!checkPath && <DesktopNavbar />}
       <section className={styles.postsWrapper}>
-        <article className={styles.newPostWrapper}>
-          <textarea
-            placeholder="any meal recommendations?"
-            onChange={(e) =>
-              setNewPostDetails({ ...newPostDetails, text: e.target.value })
-            }
-            value={newPostDetails.text}
-          ></textarea>
-          <div className={styles.newPostUploadOptions}>
-            <div>
-              <input
-                type="file"
-                id="upload-post"
-                onChange={(e) =>
-                  postFileUploadChangeHandler(e, setNewPostDetails)
-                }
-              />
-              <label htmlFor="upload-post">
-                <Folder fill="hsl(23, 49%, 35%)" />
-              </label>
-            </div>
-            <button onClick={postBtnClickHandler}>post</button>
-          </div>
-        </article>
+        <NewPost />
+        <div className={styles.userPostsWrapper}>
+          {userPosts.map((item) => {
+            return <PostCard key={item.id} post={item} />;
+          })}
+        </div>
       </section>
       <div className={styles.feedMoreOptions}></div>
     </div>
