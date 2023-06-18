@@ -3,46 +3,19 @@
   margin-top: var(--space-7);
   display: flex;
 }
-/* .feedWrapper > * {
-  flex: 1;
-} */
+
 .postsWrapper {
   width: 100%;
-}
-.newPostWrapper {
   display: flex;
-  gap: 8px;
   flex-direction: column;
-  padding: var(--space-2) var(--space-1);
-  border: 2px solid var(--color-primary-700);
-  margin: var(--space-2) var(--space-1);
-  border-radius: 5px;
-  width: 95%;
-  box-shadow: 1px 2px 2px var(--color-primary-700);
-  background-color: var(--color-secondary-300);
+  gap: 16px;
+  overflow: auto;
 }
-
-.newPostWrapper input {
-  display: none;
-  visibility: hidden;
-}
-
-.newPostWrapper label {
-  cursor: pointer;
-}
-.newPostWrapper textarea {
-  max-width: 100%;
-  border: 2px solid var(--color-primary-700);
-  border-radius: 5px;
-}
-
-.newPostUploadOptions {
-  padding: 0 var(--space-2);
+.userPostsWrapper {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 16px;
 }
-
 @media screen and (min-width: 768px) {
   .postsWrapper {
     width: 50vw;

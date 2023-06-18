@@ -13,12 +13,12 @@ const PostProvider = ({ children }) => {
     try {
       const { allPostsData, allPostsError } = await supabase
         .from("posts")
-        .select("*");
+        .select();
       const { data, error } = await supabase
         .from("profile")
-        .select("*")
+        .select()
         .eq("userId", userLoginDetails?.userId);
-      console.log({ allPostsData, data });
+      // console.log({ allPostsData, data, user: userLoginDetails?.userId });
       const { postData, postError } = await supabase
         .from("posts")
         .select()
@@ -54,8 +54,21 @@ const PostProvider = ({ children }) => {
 export default PostProvider;
 
 export const usePost = () => {
-  const { userPosts, allPosts, postToggle, setPostToggle } =
-    useContext(postContext);
+  const {
+    userPosts,
+    setUserPost,
+    allPosts,
+    setAllPosts,
+    postToggle,
+    setPostToggle,
+  } = useContext(postContext);
 
-  return { userPosts, allPosts, postToggle, setPostToggle };
+  return {
+    userPosts,
+    setUserPost,
+    allPosts,
+    setAllPosts,
+    postToggle,
+    setPostToggle,
+  };
 };
