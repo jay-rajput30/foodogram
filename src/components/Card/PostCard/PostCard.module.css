@@ -8,7 +8,8 @@
   color: var(--color-primary-700);
   margin-left: auto;
   margin-right: auto;
-  box-shadow: 1px 1px 1px var(--color-primary-700);
+  box-shadow: 1px 1px 1px var(--color-primary-700),
+    1px 2px 2px var(--color-primary-700);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -33,6 +34,9 @@
   flex-direction: column;
   align-items: flex-start;
 }
+.postCardProfileHeaderDetails h4 {
+  color: var(--color-primary-700);
+}
 .postCardBody img {
   object-fit: cover;
   height: 100%;
@@ -53,4 +57,9 @@
   display: flex;
   justify-content: space-between;
   border-top: 1px solid var(--color-primary-100);
+}
+
+.postCardUserActionsWrapper span {
+  display: flex;
+  gap: 4px;
 }

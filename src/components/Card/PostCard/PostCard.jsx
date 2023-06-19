@@ -6,7 +6,6 @@ import { updateLikes } from "../../../../backend/controllers/post.controller";
 import { useAuth } from "../../../context/AuthProvider";
 
 const PostCard = ({ post }) => {
-  const [postImg, setPostImg] = useState("");
   const { userLoginDetails } = useAuth();
   const fetchImage = () => {
     try {
@@ -34,7 +33,7 @@ const PostCard = ({ post }) => {
       <div className={styles.postCardHeader}>
         <div className={styles.postCardProfilePhoto}></div>
         <div className={styles.postCardProfileHeaderDetails}>
-          <h3>your name</h3>
+          <h4>your name</h4>
           <small>12-06-2023</small>
         </div>
       </div>
@@ -47,11 +46,14 @@ const PostCard = ({ post }) => {
         )}
       </div>
       <div className={styles.postCardUserActionsWrapper}>
-        <ThumbsUp
-          onClick={() =>
-            likeBtnClickHandler(userLoginDetails?.userId, post?.id)
-          }
-        />
+        <span>
+          <ThumbsUp
+            onClick={() =>
+              likeBtnClickHandler(userLoginDetails?.userId, post?.id)
+            }
+          />
+          {post.likes.length}
+        </span>
         <MessageSquare />
         <Share />
       </div>

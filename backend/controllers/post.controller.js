@@ -78,3 +78,17 @@ export const updateLikes = async (userId, postId) => {
     return { success: false, data: null, error: e };
   }
 };
+
+export const getSuggestProfiles = async () => {
+  try {
+    let { data: profiles, error } = await supabase
+      .from("profile")
+      .select("*")
+      .range(0, 2);
+    if (!error) {
+      return { success: true, data: profiles, error: null };
+    }
+  } catch (e) {
+    return { success: false, data: null, error: e };
+  }
+};

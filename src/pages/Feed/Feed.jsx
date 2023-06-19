@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Feed.module.css";
 import MobileNavbar from "../../components/Navbar/MobileNavbar/MobileNavbar";
 import { useLocation } from "react-router";
@@ -9,12 +9,14 @@ import { supabase } from "../../../backend/db/db.connect";
 import { usePost } from "../../context/PostProvider";
 import NewPost from "./NewPost/NewPost";
 import PostCard from "../../components/Card/PostCard/PostCard";
+import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
+import { getSuggestProfiles } from "../../../backend/controllers/post.controller";
 
 const Feed = () => {
   const location = useLocation();
   const { userLoginDetails } = useAuth();
   const { userPosts, setUserPost, postToggle, setAllPosts } = usePost();
-
+  const [suggestedProfiles, setSuggestedProfiles] = useState([]);
   const checkPath = checkPageLocation(location.pathname);
 
   const fetchPosts = async () => {
@@ -31,9 +33,12 @@ const Feed = () => {
         .from("posts")
         .select()
         .in("userId", [...data[0].following, userLoginDetails?.userId]);
-      if (!postError && !error && !allPostsError) {
+      const { data: suggestedProfileData, success } =
+        await getSuggestProfiles();
+      if (!error && !postError && success) {
         setUserPost(postData);
         setAllPosts(allPostsData);
+        setSuggestedProfiles(suggestedProfileData);
       }
     } catch (e) {
       console.log(e);
@@ -55,7 +60,12 @@ const Feed = () => {
           })}
         </div>
       </section>
-      <div className={styles.feedMoreOptions}></div>
+      <div className={styles.feedMoreOptions}>
+        <h2>Suggested profiles</h2>
+        {suggestedProfiles.map((profile) => {
+          return <ProfileCard key={profile.id} profile={profile} />;
+        })}
+      </div>
     </div>
   );
 };

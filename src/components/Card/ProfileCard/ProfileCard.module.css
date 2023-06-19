@@ -1,0 +1,29 @@
+.profileCardWrapper {
+  max-width: 100%;
+  border: 2px solid var(--color-secondary-700);
+  border-radius: 5px;
+  display: flex;
+  gap: 8px;
+  padding: var(--space-1);
+  align-items: center;
+}
+
+.profileCardDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.profileCardDetails h3 {
+  color: var(--color-primary-700);
+}
+.profileCardDetails button {
+  font-size: var(--font-length-sm3);
+  padding: 0;
+}
+.profileCardWrapper figure {
+  background-color: black;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
