@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./PostCard.module.css";
 import { supabase } from "../../../../backend/db/db.connect";
 import { MessageSquare, Share, ThumbsUp } from "react-feather";
-import { updateLike } from "../../../../backend/controllers/post.controller";
+import { updateLikes } from "../../../../backend/controllers/post.controller";
 import { useAuth } from "../../../context/AuthProvider";
 
 const PostCard = ({ post }) => {
@@ -23,7 +23,7 @@ const PostCard = ({ post }) => {
 
   const likeBtnClickHandler = async (userId, postId) => {
     console.log("click handler called");
-    const { data, success } = await updateLike(userId, postId);
+    const { data, success } = await updateLikes(userId, postId);
     if (success) {
       console.log({ data });
     }

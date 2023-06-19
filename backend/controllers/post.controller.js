@@ -42,7 +42,7 @@ export const getUserFollowingPosts = async (userId) => {
   }
 };
 
-export const updateLike = async (userId, postId) => {
+export const updateLikes = async (userId, postId) => {
   try {
     let { data: profile, error } = await supabase
       .from("profile")
@@ -53,29 +53,25 @@ export const updateLike = async (userId, postId) => {
       .from("posts")
       .select("*")
       .eq("id", postId);
-    console.log({
-      post: post[0],
-      profile: profile[0],
-      founduser: post[0]?.likes.includes((item) => item.id === userId),
-    });
 
-    if (post[0]?.likes.includes((item) => item.id === userId)) {
-      const { updatedPost, updatedpostError } = await supabase
-        .from("posts")
-        .update({ likes: post[0]?.likes.filter((item) => item.id !== userId) })
-        .eq("id", postId)
-        .select();
-      console.log({ updatedPost: updatedPost[0] });
+    let updatedLikesArray = [];
+    if (!post[0].likes.some((item) => item.userId === userId)) {
+      updatedLikesArray = [...post[0]?.likes, profile[0]];
     } else {
-      const { updatedPost, updatedpostError } = await supabase
-        .from("posts")
-        .update({ likes: [...post[0]?.likes, profile[0]] })
-        .eq("id", postId)
-        .select();
-      console.log({ updatedPost: updatedPost[0] });
+      updatedLikesArray = post[0]?.likes.filter(
+        (item) => item.userId !== userId
+      );
     }
-    if (!error && !updatedpostError) {
-      console.log("inside update post call");
+
+    const { updatedPost, updatedpostError } = await supabase
+      .from("posts")
+      .update({
+        likes: updatedLikesArray,
+      })
+      .eq("id", postId)
+      .select();
+
+    if (!error && !postError && !updatedpostError) {
       return { success: true, data: updatedPost[0], error: e };
     }
   } catch (e) {
