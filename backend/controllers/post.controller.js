@@ -41,3 +41,44 @@ export const getUserFollowingPosts = async (userId) => {
     return { success: false, data: null, error: e };
   }
 };
+
+export const updateLike = async (userId, postId) => {
+  try {
+    let { data: profile, error } = await supabase
+      .from("profile")
+      .select("*")
+      .eq("userId", userId);
+
+    let { data: post, postError } = await supabase
+      .from("posts")
+      .select("*")
+      .eq("id", postId);
+    console.log({
+      post: post[0],
+      profile: profile[0],
+      founduser: post[0]?.likes.includes((item) => item.id === userId),
+    });
+
+    if (post[0]?.likes.includes((item) => item.id === userId)) {
+      const { updatedPost, updatedpostError } = await supabase
+        .from("posts")
+        .update({ likes: post[0]?.likes.filter((item) => item.id !== userId) })
+        .eq("id", postId)
+        .select();
+      console.log({ updatedPost: updatedPost[0] });
+    } else {
+      const { updatedPost, updatedpostError } = await supabase
+        .from("posts")
+        .update({ likes: [...post[0]?.likes, profile[0]] })
+        .eq("id", postId)
+        .select();
+      console.log({ updatedPost: updatedPost[0] });
+    }
+    if (!error && !updatedpostError) {
+      console.log("inside update post call");
+      return { success: true, data: updatedPost[0], error: e };
+    }
+  } catch (e) {
+    return { success: false, data: null, error: e };
+  }
+};

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styles from "./Feed.module.css";
 import MobileNavbar from "../../components/Navbar/MobileNavbar/MobileNavbar";
 import { useLocation } from "react-router";
