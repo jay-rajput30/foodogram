@@ -41,3 +41,54 @@ export const getUserFollowingPosts = async (userId) => {
     return { success: false, data: null, error: e };
   }
 };
+
+export const updateLikes = async (userId, postId) => {
+  try {
+    let { data: profile, error } = await supabase
+      .from("profile")
+      .select("*")
+      .eq("userId", userId);
+
+    let { data: post, postError } = await supabase
+      .from("posts")
+      .select("*")
+      .eq("id", postId);
+
+    let updatedLikesArray = [];
+    if (!post[0].likes.some((item) => item.userId === userId)) {
+      updatedLikesArray = [...post[0]?.likes, profile[0]];
+    } else {
+      updatedLikesArray = post[0]?.likes.filter(
+        (item) => item.userId !== userId
+      );
+    }
+
+    const { updatedPost, updatedpostError } = await supabase
+      .from("posts")
+      .update({
+        likes: updatedLikesArray,
+      })
+      .eq("id", postId)
+      .select();
+
+    if (!error && !postError && !updatedpostError) {
+      return { success: true, data: updatedPost[0], error: e };
+    }
+  } catch (e) {
+    return { success: false, data: null, error: e };
+  }
+};
+
+export const getSuggestProfiles = async () => {
+  try {
+    let { data: profiles, error } = await supabase
+      .from("profile")
+      .select("*")
+      .range(0, 2);
+    if (!error) {
+      return { success: true, data: profiles, error: null };
+    }
+  } catch (e) {
+    return { success: false, data: null, error: e };
+  }
+};

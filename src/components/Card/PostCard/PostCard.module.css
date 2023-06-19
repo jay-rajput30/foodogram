@@ -1,18 +1,27 @@
 .postCardWrapper {
-  width: 95%;
-  border: 1px solid var(--color-secondary-700);
+  width: 100%;
+  border: 2px solid var(--color-secondary-700);
   border-radius: 5px;
   background-color: var(--color-secondary-100);
   color: var(--color-primary-700);
   padding: var(--space-2);
   color: var(--color-primary-700);
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 1px 1px 1px var(--color-primary-700),
+    1px 2px 2px var(--color-primary-700);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .postCardHeader {
+  padding: var(--space-1);
   width: 100%;
   display: flex;
   gap: 16px;
   align-items: center;
+  border-bottom: 1px solid var(--color-primary-100);
 }
 .postCardProfilePhoto {
   width: 50px;
@@ -25,15 +34,32 @@
   flex-direction: column;
   align-items: flex-start;
 }
-
-.postCardBody {
-  margin-top: var(--space-2);
+.postCardProfileHeaderDetails h4 {
+  color: var(--color-primary-700);
+}
+.postCardBody img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+  object-position: 50% 50%;
 }
 
-.postCardBody img {
-  object-fit: contain;
+.postCardBody figure {
+  height: 330px;
+  width: 100%;
   border-radius: 5px;
   border: 2px solid var(--color-primary-700);
+}
+.postCardUserActionsWrapper {
+  padding: var(--space-1) 0;
   width: 100%;
-  height: 300px;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--color-primary-100);
+}
+
+.postCardUserActionsWrapper span {
+  display: flex;
+  gap: 4px;
 }
