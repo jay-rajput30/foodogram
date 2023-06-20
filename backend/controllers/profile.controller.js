@@ -60,3 +60,17 @@ export const followUser = async (userId, followerId, newFollowerList) => {
     return { success: false, data: null, error: e };
   }
 };
+
+export const getProfile = async (profileId) => {
+  try {
+    const { data: profile, error } = await supabase
+      .from("profile")
+      .select("*")
+      .eq("userId", profileId);
+    if (!error) {
+      return { success: true, data: profile[0], error: null };
+    }
+  } catch (e) {
+    return { success: false, data: null, error: e };
+  }
+};

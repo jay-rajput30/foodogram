@@ -15,7 +15,7 @@ import { getSuggestProfiles } from "../../../backend/controllers/post.controller
 const Feed = () => {
   const location = useLocation();
   const { userLoginDetails } = useAuth();
-  const { userPosts, setUserPost, postToggle, setAllPosts } = usePost();
+  const { userPosts, setUserPost, setPostToggle, setAllPosts } = usePost();
   const [suggestedProfiles, setSuggestedProfiles] = useState([]);
   const checkPath = checkPageLocation(location.pathname);
 
@@ -39,6 +39,7 @@ const Feed = () => {
         setUserPost(postData);
         setAllPosts(allPostsData);
         setSuggestedProfiles(suggestedProfileData);
+        setPostToggle((prev) => !prev);
       }
     } catch (e) {
       console.log(e);
@@ -46,7 +47,7 @@ const Feed = () => {
   };
   useEffect(() => {
     fetchPosts();
-  }, [postToggle]);
+  }, []);
 
   return (
     <div className={styles.feedWrapper}>
