@@ -23,6 +23,9 @@
   align-items: center;
   border-bottom: 1px solid var(--color-primary-100);
 }
+.postCardHeader:hover {
+  cursor: pointer;
+}
 .postCardProfilePhoto {
   width: 50px;
   height: 50px;

@@ -13,6 +13,7 @@ export const createPost = async (postDetails) => {
     return { success: false, data: null, error: e };
   }
 };
+
 export const getAllPosts = async () => {
   try {
     const { data, error } = await supabase.from("posts").select();
