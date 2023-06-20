@@ -14,6 +14,20 @@ export const createPost = async (postDetails) => {
   }
 };
 
+export const getPosts = async (profileId) => {
+  try {
+    const { data, error } = await supabase
+      .from("posts")
+      .select()
+      .eq("userId", profileId);
+    if (!error) {
+      console.log({ data });
+      return { success: true, data, error: null };
+    }
+  } catch (e) {
+    return { success: false, data: null, error: e };
+  }
+};
 export const getAllPosts = async () => {
   try {
     const { data, error } = await supabase.from("posts").select();
