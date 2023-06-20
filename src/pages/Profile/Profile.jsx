@@ -3,17 +3,22 @@ import { useParams } from "react-router";
 import { getProfile } from "../../../backend/controllers/profile.controller";
 import styles from "./Profile.module.css";
 import { useAuth } from "../../context/AuthProvider";
+import { getPosts } from "../../../backend/controllers/post.controller";
+import PostCard from "../../components/Card/PostCard/PostCard";
 
 const Profile = () => {
   const [profileData, setProfileData] = useState([]);
+  const [profilePosts, setProfilePosts] = useState([]);
   const { userLoginDetails } = useAuth();
   const { id } = useParams();
   const fetchProfile = async () => {
     try {
       const { data, success } = await getProfile(id);
-      if (success) {
-        console.log({ data });
+      const { data: postData, success: postSuccess } = await getPosts(id);
+      if (success && postSuccess) {
+        console.log({ data, postData });
         setProfileData(data);
+        setProfilePosts(postData);
       }
     } catch (e) {
       console.error({ e });
@@ -53,7 +58,11 @@ const Profile = () => {
 
         <button>bookmarks</button>
       </div>
-      <section className={styles.profilePosts}></section>
+      <section className={styles.profilePosts}>
+        {profilePosts?.map((post) => {
+          return <PostCard key={post?.id} post={post} />;
+        })}
+      </section>
     </div>
   );
 };

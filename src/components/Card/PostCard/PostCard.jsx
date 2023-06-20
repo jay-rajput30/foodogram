@@ -36,14 +36,11 @@ const PostCard = ({ post }) => {
   };
 
   return (
-    <article
-      className={styles.postCardWrapper}
-      onClick={() => postCardClickHandler(post.userId)}
-    >
+    <article className={styles.postCardWrapper}>
       <div className={styles.postCardHeader}>
         <div className={styles.postCardProfilePhoto}></div>
         <div className={styles.postCardProfileHeaderDetails}>
-          <h4>your name</h4>
+          <h4 onClick={() => postCardClickHandler(post.userId)}>your name</h4>
           <small>12-06-2023</small>
         </div>
       </div>
