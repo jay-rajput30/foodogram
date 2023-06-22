@@ -6,7 +6,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
 import AuthProvider from "./context/AuthProvider";
 import PostProvider from "./context/PostProvider";
-console.log({ AuthProvider });
+
 root.render(
   <Router>
     <AuthProvider>

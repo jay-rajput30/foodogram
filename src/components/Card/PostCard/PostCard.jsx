@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./PostCard.module.css";
 import { supabase } from "../../../../backend/db/db.connect";
-import { MessageSquare, Share, ThumbsUp } from "react-feather";
+import { Bookmark, MessageSquare, Share, ThumbsUp } from "react-feather";
 import { updateLikes } from "../../../../backend/controllers/post.controller";
 import { useAuth } from "../../../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
@@ -62,7 +62,7 @@ const PostCard = ({ post }) => {
           {post.likes.length}
         </span>
         <MessageSquare />
-        <Share />
+        <Bookmark />
       </div>
     </article>
   );

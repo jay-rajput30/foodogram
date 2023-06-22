@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { getProfile } from "../../../backend/controllers/profile.controller";
+import {
+  followUser,
+  getProfile,
+} from "../../../backend/controllers/profile.controller";
 import styles from "./Profile.module.css";
 import { useAuth } from "../../context/AuthProvider";
 import { getPosts } from "../../../backend/controllers/post.controller";
@@ -28,6 +31,13 @@ const Profile = () => {
     fetchProfile();
   }, []);
 
+  const followBtnClickHandler = async () => {
+    const { data, success } = await followUser(
+      userLoginDetails?.loggedInProfile,
+      profileData
+    );
+    console.log({ data, success });
+  };
   return (
     <div className={styles.profileWrapper}>
       <section className={styles.profileDetails}>
@@ -36,27 +46,21 @@ const Profile = () => {
         </figure>
         <div>
           <h2>{profileData?.firstName + " " + profileData?.lastName}</h2>
-          <div className={styles.profileDetailsFollowerWrapper}>
-            <div>
-              <h4>followers</h4>
-              <p>{profileData?.followers?.length}</p>
-            </div>
-            <div>
-              <h4>following</h4>
-              <p>{profileData?.following?.length}</p>
-            </div>
+          <div className={styles.profileButtonWrapper}>
+            <button onClick={followBtnClickHandler}>follow</button>
           </div>
         </div>
       </section>
       <p>{profileData?.bio}</p>
-      <div className={styles.profileButtonWrapper}>
-        {userLoginDetails.userId === profileData.userId ? (
-          <button>edit profile</button>
-        ) : (
-          <button>follow</button>
-        )}
-
-        <button>bookmarks</button>
+      <div className={styles.profileDetailsFollowerWrapper}>
+        <div>
+          <h4>followers</h4>
+          <p>{profileData?.followers?.length}</p>
+        </div>
+        <div>
+          <h4>following</h4>
+          <p>{profileData?.following?.length}</p>
+        </div>
       </div>
       <section className={styles.profilePosts}>
         {profilePosts?.map((post) => {

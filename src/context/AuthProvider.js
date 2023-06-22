@@ -8,6 +8,7 @@ const AuthProvider = ({ children }) => {
     email: null,
     userId: null,
     token: null,
+    loggedInProfile: null,
   });
   const updateUserLoginDetails = (userDetails) => {
     setUserloginDetails(userDetails);

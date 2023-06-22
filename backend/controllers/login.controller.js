@@ -39,18 +39,19 @@ export const getLoginCredentials = async (userDetails) => {
       email: userDetails.email,
       password: userDetails.password,
     });
-    if (!error) {
-      // console.log({
-      //   email: data.session.user.email,
-      //   userId: data.session.user.id,
-      //   token: data.session.access_token,
-      // });
+    let { data: userData, error: userError } = await supabase
+      .from("profile")
+      .select("*")
+      .eq("userId", data.session.user.id);
+    console.log({ userData });
+    if (!error && !userError) {
       return {
         success: true,
         data: {
           email: data.session.user.email,
           userId: data.session.user.id,
           token: data.session.access_token,
+          loggedInProfile: userData[0],
         },
         error: null,
       };

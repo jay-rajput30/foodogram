@@ -15,7 +15,7 @@ const DesktopNavbar = () => {
   };
 
   const profileBtnClickHandler = () => {
-    navigate(`/profile/${userLoginDetails?.userId}`);
+    navigate(`/profile`);
   };
 
   return (
