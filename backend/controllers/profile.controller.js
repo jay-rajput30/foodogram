@@ -3,37 +3,45 @@ import { supabase } from "../db/db.connect";
 export const followUser = async (user, followProfile) => {
   try {
     //fetch current user and follow user profile details
-    const { userData, userError } = await supabase
+
+    const { data: userData, userError } = await supabase
       .from("profile")
       .select("*")
       .eq("userId", user.userId);
 
-    const { followerData, followerError } = await supabase
+    const { data: followerData, followerError } = await supabase
       .from("profile")
       .select("*")
-      .eq("userId", followProfile.followerId);
+      .eq("userId", followProfile.userId);
+
     //check if values already present in current user following and follow user user followers list
     //if not present add them else remove them.
+
     if (
-      !userData[0].following.some((item) => item.userId === user.userId) &&
-      !followerData[0].followers.some((item) => item.userId === user.userId)
+      !userData[0].following.some((item) => item.userId === user?.userId) &&
+      !followerData[0].followers.some((item) => item.userId === user?.userId)
     ) {
-      const { data, error } = await supabase
+      const updatedUserFollowingList = [
+        ...userData[0].following,
+        followProfile,
+      ];
+      const { data: updatedUserData, error } = await supabase
         .from("profile")
-        .update({ following: [...userData[0].following, followProfile] })
+        .update({ following: updatedUserFollowingList })
         .eq("userId", user.userId)
         .select();
 
-      const { updatedFollowerData, updatedFollowerError } = await supabase
+      const { data: updatedFollowerData, updatedFollowerError } = await supabase
         .from("profile")
         .update({ followers: [...followerData[0].followers, user] })
         .eq("userId", followProfile.userId)
         .select();
+
       if (!error && !updatedFollowerError) {
-        return { sucess: true, data: data[0], error: null };
+        return { sucess: true, data: updatedUserData[0], error: null };
       }
     } else {
-      const { data, error } = await supabase
+      const { data: updatedUserData, error } = await supabase
         .from("profile")
         .update({
           following: userData[0].following.filter(
@@ -43,7 +51,7 @@ export const followUser = async (user, followProfile) => {
         .eq("userId", user.userId)
         .select();
 
-      const { updatedFollowerData, updatedFollowerError } = await supabase
+      const { data: updatedFollowerData, updatedFollowerError } = await supabase
         .from("profile")
         .update({
           followers: followerData[0].followers.filter(
@@ -53,7 +61,7 @@ export const followUser = async (user, followProfile) => {
         .eq("userId", followProfile.userId)
         .select();
       if (!error && !updatedFollowerError) {
-        return { sucess: true, data: data[0], error: null };
+        return { sucess: true, data: updatedUserData[0], error: null };
       }
     }
   } catch (e) {

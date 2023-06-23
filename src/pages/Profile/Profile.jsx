@@ -32,11 +32,15 @@ const Profile = () => {
   }, []);
 
   const followBtnClickHandler = async () => {
-    const { data, success } = await followUser(
-      userLoginDetails?.loggedInProfile,
-      profileData
-    );
-    console.log({ data, success });
+    try {
+      const { data, success } = await followUser(
+        userLoginDetails?.loggedInProfile,
+        profileData
+      );
+      console.log({ data, success });
+    } catch (e) {
+      console.error({ e });
+    }
   };
   return (
     <div className={styles.profileWrapper}>
