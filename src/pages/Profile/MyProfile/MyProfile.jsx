@@ -9,14 +9,14 @@ const MyProfile = () => {
   const [profileData, setProfileData] = useState([]);
   const [profilePosts, setProfilePosts] = useState([]);
   const { userLoginDetails } = useAuth();
-  console.log({ userId: userLoginDetails?.userId });
+
   const fetchProfile = async () => {
     try {
       const { data, success } = await getProfile(userLoginDetails?.userId);
       const { data: postData, success: postSuccess } = await getPosts(
         userLoginDetails?.userId
       );
-      console.log({ data, postData });
+
       if (success && postSuccess) {
         setProfileData(data);
         setProfilePosts(postData);
@@ -33,7 +33,7 @@ const MyProfile = () => {
     <div className={styles.profileWrapper}>
       <section className={styles.profileDetails}>
         <figure className={styles.profileDetailsImage}>
-          <div></div>
+          <img src={profileData?.profileImg} alt={profileData?.profileImg} />
         </figure>
         <div>
           <h2>{profileData?.firstName + " " + profileData?.lastName}</h2>

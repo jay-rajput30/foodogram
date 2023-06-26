@@ -12,7 +12,7 @@ import PostCard from "../../components/Card/PostCard/PostCard";
 const Profile = () => {
   const [profileData, setProfileData] = useState([]);
   const [profilePosts, setProfilePosts] = useState([]);
-  const { userLoginDetails } = useAuth();
+  const { userLoginDetails, profileToggle, setProfileToggle } = useAuth();
   const { id } = useParams();
   const fetchProfile = async () => {
     try {
@@ -29,7 +29,7 @@ const Profile = () => {
   };
   useEffect(() => {
     fetchProfile();
-  }, []);
+  }, [profileToggle]);
 
   const followBtnClickHandler = async () => {
     try {
@@ -37,7 +37,9 @@ const Profile = () => {
         userLoginDetails?.loggedInProfile,
         profileData
       );
-      console.log({ data, success });
+      if (success) {
+        setProfileToggle((prev) => !prev);
+      }
     } catch (e) {
       console.error({ e });
     }

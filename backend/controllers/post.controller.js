@@ -2,11 +2,21 @@ import { supabase } from "../db/db.connect";
 
 export const createPost = async (postDetails) => {
   try {
-    const { data, error } = await supabase
+    let { data: profile, error } = await supabase
+      .from("profile")
+      .select("username,profileImg")
+      .eq("userId", postDetails.userId);
+
+    const { data, postError } = await supabase
       .from("posts")
-      .insert(postDetails)
+      .insert({
+        ...postDetails,
+        username: profile[0].username,
+        profileImg: profile[0].profileImg,
+      })
       .select();
-    if (!error) {
+    console.log({ postDetails, profile: profile[0] });
+    if (!error && !postError) {
       return { success: true, data, error: null };
     }
   } catch (e) {

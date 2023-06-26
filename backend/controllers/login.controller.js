@@ -13,9 +13,11 @@ export const signUpUser = async (userDetails) => {
         userId: data.user?.id,
         firstName: userDetails.firstName,
         lastName: userDetails.lastName,
+        username: userDetails.username,
         followers: [],
         following: [],
         bookmarks: [],
+        profileImg: userDetails.profileImg,
       })
       .select();
 

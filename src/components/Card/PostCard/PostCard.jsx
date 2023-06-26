@@ -9,18 +9,18 @@ import { useNavigate } from "react-router-dom";
 const PostCard = ({ post }) => {
   const { userLoginDetails } = useAuth();
   const navigate = useNavigate();
-  //   const fetchImage = () => {
-  //     try {
-  //       const { data, error } = supabase.storage
-  //         .from("posts")
-  //         .getPublicUrl(fileName);
-  //       if (!error) {
-  //         setPostImg(data.publicUrl);
-  //       }
-  //     } catch (e) {
-  //       console.error({ error: e });
-  //     }
-  //   };
+  const fetchImage = () => {
+    try {
+      const { data, error } = supabase.storage
+        .from("posts")
+        .getPublicUrl(fileName);
+      if (!error) {
+        setPostImg(data.publicUrl);
+      }
+    } catch (e) {
+      console.error({ error: e });
+    }
+  };
 
   const likeBtnClickHandler = async (userId, postId) => {
     console.log("click handler called");
@@ -38,7 +38,9 @@ const PostCard = ({ post }) => {
   return (
     <article className={styles.postCardWrapper}>
       <div className={styles.postCardHeader}>
-        <div className={styles.postCardProfilePhoto}></div>
+        <figure className={styles.postCardProfilePhoto}>
+          <img src={post.profileImg} alt={post.profileImg} />
+        </figure>
         <div className={styles.postCardProfileHeaderDetails}>
           <h4 onClick={() => postCardClickHandler(post.userId)}>your name</h4>
           <small>12-06-2023</small>

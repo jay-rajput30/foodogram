@@ -12,11 +12,17 @@
 
 .profileDetailsImage {
   flex: 1;
-  width: 95px;
-  height: 95px;
-  background-color: var(--color-alternate-700);
+  display: flex;
+  align-items: center;
+  /* background-color: var(--color-alternate-700); */
   border-radius: 50%;
   margin: var(--space-1);
+}
+
+.profileDetailsImage > img {
+  max-width: 100%;
+  width: 100px;
+  height: 100px;
 }
 
 .profileDetails {
