@@ -20,7 +20,7 @@ const MobileNavbar = () => {
   };
 
   const profileBtnClickHandler = () => {
-    navigate(`/profile/${userLoginDetails?.userId}`);
+    navigate(`/profile`);
   };
   return (
     <nav className={styles.mobileNavbarWrapper}>

@@ -8,7 +8,9 @@ const AuthProvider = ({ children }) => {
     email: null,
     userId: null,
     token: null,
+    loggedInProfile: null,
   });
+  const [profileToggle, setProfileToggle] = useState(false);
   const updateUserLoginDetails = (userDetails) => {
     setUserloginDetails(userDetails);
   };
@@ -32,12 +34,16 @@ export const useAuth = () => {
     setLoginStatus,
     userLoginDetails,
     updateUserLoginDetails,
+    profileToggle,
+    setProfileToggle,
   } = useContext(authContext);
   return {
     loginStatus,
     setLoginStatus,
     userLoginDetails,
     updateUserLoginDetails,
+    profileToggle,
+    setProfileToggle,
   };
 };
 

@@ -1,40 +1,64 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { signUpUser } from "../../../backend/controllers/login.controller";
 import styles from "./SignUp.module.css";
+import { supabase } from "../../../backend/db/db.connect";
+import { getAvatar } from "../../utils/utls,";
 const SignUp = () => {
-  const [signupData, setSignupData] = useState({});
+  const [signupData, setSignupData] = useState({
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    username: "",
+    profileImg: "",
+  });
   const navigate = useNavigate();
+  const [validUsername, setValidUsername] = useState(true);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
+  useEffect(() => {
+    // fetchAvatars();
+  }, []);
+
   const formSubmitHandler = async (formData) => {
-    setSignupData(formData);
+    setValidUsername(true);
+    setSignupData({ ...signupData, ...formData });
     try {
-      const { data, success, error } = await signUpUser({
+      const { data: usernameData, usernameError } = await supabase
+        .from("profile")
+        .select("*")
+        .eq("username", formData.username);
+      console.log({ usernameData });
+      if (usernameData[0]) {
+        console.log("username exists");
+        setValidUsername(false);
+        return;
+      }
+
+      setValidUsername(true);
+      console.log("username does not exists");
+      const { data, success } = await signUpUser({
         email: formData?.email,
         password: formData?.password,
         firstName: formData.firstName,
         lastName: formData?.lastName,
+        username: formData.username,
+        profileImg: getAvatar(),
       });
       if (success) {
         navigate("/");
-      }
-      if (error) {
-        console.log(error);
       }
     } catch (e) {
       console.error(e);
     }
   };
-
-  const cancelBtnClickHandler = () => {
-    navigate("/");
-  };
+  console.log(errors);
   return (
     <div className={styles.signUpWrapper}>
       <form
@@ -76,11 +100,29 @@ const SignUp = () => {
             type="email"
             id="email"
             placeholder="enter email"
-            {...register("email", { required: "Email id is required" })}
+            {...register("email", {
+              required: "Email id is required",
+            })}
           />
         </div>
-
-        {errors.email && <p>{errors.email?.message}</p>}
+        <p>{errors.email?.email}</p>
+        <div className={styles.signUpFormItem}>
+          <label htmlFor="email">username: </label>
+          <input
+            type="text"
+            id="username"
+            placeholder="enter username"
+            {...register("username", {
+              required: "username id is required",
+              validate: () => validUsername || "username already exists",
+            })}
+          />
+        </div>
+        {errors.username && (
+          <span className={styles.usernameErrorMessage}>
+            {errors.username?.message}
+          </span>
+        )}
         <div className={styles.signUpFormItem}>
           <label htmlFor="password">password: </label>
           <input

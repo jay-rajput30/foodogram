@@ -2,11 +2,22 @@ import { supabase } from "../db/db.connect";
 
 export const createPost = async (postDetails) => {
   try {
-    const { data, error } = await supabase
+    let { data: profile, error } = await supabase
+      .from("profile")
+      .select("username,profileImg,firstName,lastName")
+      .eq("userId", postDetails.userId);
+
+    const { data, postError } = await supabase
       .from("posts")
-      .insert(postDetails)
+      .insert({
+        ...postDetails,
+        username: profile[0].username,
+        profileImg: profile[0].profileImg,
+        name: `${profile[0].firstName} ${profile[0].lastName}`,
+      })
       .select();
-    if (!error) {
+    console.log({ postDetails, profile: profile[0] });
+    if (!error && !postError) {
       return { success: true, data, error: null };
     }
   } catch (e) {
@@ -78,7 +89,7 @@ export const updateLikes = async (userId, postId) => {
       );
     }
 
-    const { updatedPost, updatedpostError } = await supabase
+    const { data: updatedPost, updatedpostError } = await supabase
       .from("posts")
       .update({
         likes: updatedLikesArray,
@@ -86,8 +97,8 @@ export const updateLikes = async (userId, postId) => {
       .eq("id", postId)
       .select();
 
-    if (!error && !postError && !updatedpostError) {
-      return { success: true, data: updatedPost[0], error: e };
+    if (!error && !postError) {
+      return { success: true, data: updatedPost[0], error: updatedpostError };
     }
   } catch (e) {
     return { success: false, data: null, error: e };
@@ -101,6 +112,7 @@ export const getSuggestProfiles = async () => {
       .select("*")
       .range(0, 2);
     if (!error) {
+      console.log({ profiles });
       return { success: true, data: profiles, error: null };
     }
   } catch (e) {

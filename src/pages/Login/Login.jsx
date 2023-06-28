@@ -4,12 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { getLoginCredentials } from "../../../backend/controllers/login.controller";
 import { useAuth } from "../../context/AuthProvider";
+import { usePost } from "../../context/PostProvider";
 const Login = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const { setPostToggle } = usePost();
   const navigate = useNavigate();
   const { updateUserLoginDetails } = useAuth();
   const formSubmitHandler = async (loginData) => {
@@ -20,6 +22,7 @@ const Login = () => {
       });
       if (success) {
         updateUserLoginDetails(data);
+        setPostToggle((prev) => !prev);
         navigate("/feed");
       }
     } catch (e) {

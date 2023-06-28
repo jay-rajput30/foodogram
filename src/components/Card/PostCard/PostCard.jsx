@@ -1,31 +1,34 @@
 import React, { useEffect, useState } from "react";
 import styles from "./PostCard.module.css";
 import { supabase } from "../../../../backend/db/db.connect";
-import { MessageSquare, Share, ThumbsUp } from "react-feather";
+import { Bookmark, MessageSquare, Share, ThumbsUp } from "react-feather";
 import { updateLikes } from "../../../../backend/controllers/post.controller";
 import { useAuth } from "../../../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import { usePost } from "../../../context/PostProvider";
 
 const PostCard = ({ post }) => {
   const { userLoginDetails } = useAuth();
   const navigate = useNavigate();
-  //   const fetchImage = () => {
-  //     try {
-  //       const { data, error } = supabase.storage
-  //         .from("posts")
-  //         .getPublicUrl(fileName);
-  //       if (!error) {
-  //         setPostImg(data.publicUrl);
-  //       }
-  //     } catch (e) {
-  //       console.error({ error: e });
-  //     }
-  //   };
+  const { setPostToggle } = usePost();
+  const fetchImage = () => {
+    try {
+      const { data, error } = supabase.storage
+        .from("posts")
+        .getPublicUrl(fileName);
+      if (!error) {
+        setPostImg(data.publicUrl);
+      }
+    } catch (e) {
+      console.error({ error: e });
+    }
+  };
 
   const likeBtnClickHandler = async (userId, postId) => {
-    console.log("click handler called");
-    const { data, success } = await updateLikes(userId, postId);
+    const { data, success, error } = await updateLikes(userId, postId);
+    console.log({ success, error });
     if (success) {
+      setPostToggle((prev) => !prev);
       console.log({ data });
     }
   };
@@ -38,9 +41,11 @@ const PostCard = ({ post }) => {
   return (
     <article className={styles.postCardWrapper}>
       <div className={styles.postCardHeader}>
-        <div className={styles.postCardProfilePhoto}></div>
+        <figure className={styles.postCardProfilePhoto}>
+          <img src={post.profileImg} alt={post.profileImg} />
+        </figure>
         <div className={styles.postCardProfileHeaderDetails}>
-          <h4 onClick={() => postCardClickHandler(post.userId)}>your name</h4>
+          <h4 onClick={() => postCardClickHandler(post.userId)}>{post.name}</h4>
           <small>12-06-2023</small>
         </div>
       </div>
@@ -59,10 +64,10 @@ const PostCard = ({ post }) => {
               likeBtnClickHandler(userLoginDetails?.userId, post?.id)
             }
           />
-          {post.likes.length}
+          {post.likes?.length}
         </span>
         <MessageSquare />
-        <Share />
+        <Bookmark />
       </div>
     </article>
   );

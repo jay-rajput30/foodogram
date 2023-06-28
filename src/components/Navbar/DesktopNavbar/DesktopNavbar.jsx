@@ -1,7 +1,9 @@
 import React from "react";
 import styles from "./DesktopNavbar.module.css";
 import { Bookmark, Home, Search, User } from "react-feather";
+import { useNavigate } from "react-router-dom";
 const DesktopNavbar = () => {
+  const navigate = useNavigate();
   const homeBtnClickHandler = () => {
     navigate("/feed");
   };
@@ -15,7 +17,7 @@ const DesktopNavbar = () => {
   };
 
   const profileBtnClickHandler = () => {
-    navigate(`/profile/${userLoginDetails?.userId}`);
+    navigate(`/profile`);
   };
 
   return (

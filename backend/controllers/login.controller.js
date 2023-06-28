@@ -13,9 +13,11 @@ export const signUpUser = async (userDetails) => {
         userId: data.user?.id,
         firstName: userDetails.firstName,
         lastName: userDetails.lastName,
+        username: userDetails.username,
         followers: [],
         following: [],
         bookmarks: [],
+        profileImg: userDetails.profileImg,
       })
       .select();
 
@@ -39,18 +41,19 @@ export const getLoginCredentials = async (userDetails) => {
       email: userDetails.email,
       password: userDetails.password,
     });
-    if (!error) {
-      // console.log({
-      //   email: data.session.user.email,
-      //   userId: data.session.user.id,
-      //   token: data.session.access_token,
-      // });
+    let { data: userData, error: userError } = await supabase
+      .from("profile")
+      .select("*")
+      .eq("userId", data.session.user.id);
+
+    if (!error && !userError) {
       return {
         success: true,
         data: {
           email: data.session.user.email,
           userId: data.session.user.id,
           token: data.session.access_token,
+          loggedInProfile: userData[0],
         },
         error: null,
       };

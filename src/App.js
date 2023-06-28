@@ -6,8 +6,7 @@ import Feed from "./pages/Feed/Feed";
 import Explore from "./pages/Explore/Explore.";
 import Bookmark from "./pages/Bookmark/Bookmark";
 import Profile from "./pages/Profile/Profile";
-import MobileNavbar from "./components/Navbar/MobileNavbar/MobileNavbar";
-import DesktopNavbar from "./components/Navbar/DesktopNavbar/DesktopNavbar";
+import MyProfile from "./pages/Profile/MyProfile/MyProfile";
 
 const App = () => {
   return (
@@ -20,7 +19,7 @@ const App = () => {
         <Route path="/feed" element={<Feed />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/bookmark" element={<Bookmark />} />
-        <Route path="/profile" elemen={<Profile />} />
+        <Route path="/profile" element={<MyProfile />} />
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="signup" element={<SignUp />} />
       </Routes>
