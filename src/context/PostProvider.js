@@ -9,23 +9,27 @@ const PostProvider = ({ children }) => {
   const [allPosts, setAllPosts] = useState([]);
   const [postToggle, setPostToggle] = useState(false);
   const { userLoginDetails } = useAuth();
+  console.log({ userId: userLoginDetails?.userId });
   const fetchPosts = async () => {
     try {
-      const { allPostsData, allPostsError } = await supabase
+      const { data: allPostsData, allPostsError } = await supabase
         .from("posts")
         .select("*");
-      const { data, error } = await supabase
+      console.log({ allPostsData });
+      const { data: profileData, error } = await supabase
         .from("profile")
         .select("*")
         .eq("userId", userLoginDetails?.userId);
+      console.log({ profileData });
       // console.log({ allPostsData, data, user: userLoginDetails?.userId });
-      const { postData, postError } = await supabase
+      const { data: postData, postError } = await supabase
         .from("posts")
         .select("*")
-        .in("userId", [...data[0].following, userLoginDetails?.userId]);
-      if (!postError && !error && !allPostsError) {
-        setUserPost(postData[0]);
-        setAllPosts(allPostsData[0]);
+        .in("userId", [...profileData[0]?.following, userLoginDetails?.userId]);
+      console.log({ postData });
+      if (!postError && !allPostsError) {
+        setUserPost([...postData]);
+        setAllPosts([...allPostsData]);
       }
     } catch (e) {
       console.log(e);

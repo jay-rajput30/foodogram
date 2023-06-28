@@ -5,10 +5,12 @@ import { Bookmark, MessageSquare, Share, ThumbsUp } from "react-feather";
 import { updateLikes } from "../../../../backend/controllers/post.controller";
 import { useAuth } from "../../../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import { usePost } from "../../../context/PostProvider";
 
 const PostCard = ({ post }) => {
   const { userLoginDetails } = useAuth();
   const navigate = useNavigate();
+  const { setPostToggle } = usePost();
   const fetchImage = () => {
     try {
       const { data, error } = supabase.storage
@@ -23,9 +25,10 @@ const PostCard = ({ post }) => {
   };
 
   const likeBtnClickHandler = async (userId, postId) => {
-    console.log("click handler called");
-    const { data, success } = await updateLikes(userId, postId);
+    const { data, success, error } = await updateLikes(userId, postId);
+    console.log({ success, error });
     if (success) {
+      setPostToggle((prev) => !prev);
       console.log({ data });
     }
   };
@@ -42,7 +45,7 @@ const PostCard = ({ post }) => {
           <img src={post.profileImg} alt={post.profileImg} />
         </figure>
         <div className={styles.postCardProfileHeaderDetails}>
-          <h4 onClick={() => postCardClickHandler(post.userId)}>your name</h4>
+          <h4 onClick={() => postCardClickHandler(post.userId)}>{post.name}</h4>
           <small>12-06-2023</small>
         </div>
       </div>
@@ -61,7 +64,7 @@ const PostCard = ({ post }) => {
               likeBtnClickHandler(userLoginDetails?.userId, post?.id)
             }
           />
-          {post.likes.length}
+          {post.likes?.length}
         </span>
         <MessageSquare />
         <Bookmark />

@@ -19,28 +19,29 @@ const Feed = () => {
     usePost();
   const [suggestedProfiles, setSuggestedProfiles] = useState([]);
   const checkPath = checkPageLocation(location.pathname);
-
+  console.log({ allPosts });
   const fetchPosts = async () => {
     try {
-      const { data: allPostsData, allPostsError } = await supabase
-        .from("posts")
-        .select("*");
+      // const { data: allPostsData, allPostsError } = await supabase
+      //   .from("posts")
+      //   .select("*");
 
-      const { data, error } = await supabase
-        .from("profile")
-        .select()
-        .eq("userId", userLoginDetails?.userId);
+      // const { data, error } = await supabase
+      //   .from("profile")
+      //   .select()
+      //   .eq("userId", userLoginDetails?.userId);
 
-      const { data: postData, postError } = await supabase
-        .from("posts")
-        .select()
-        .in("userId", [...data[0].following, userLoginDetails?.userId]);
+      // const { data: postData, postError } = await supabase
+      //   .from("posts")
+      //   .select()
+      //   .in("userId", [...data[0].following, userLoginDetails?.userId]);
 
       const { data: suggestedProfileData, success } =
         await getSuggestProfiles();
-      if (!error && !postError && success) {
-        setUserPost(postData);
-        setAllPosts(allPostsData);
+      
+      if (success) {
+        // setUserPost(postData[0]);
+        // setAllPosts(allPostsData[0]);
         setSuggestedProfiles(suggestedProfileData);
         setPostToggle((prev) => !prev);
       }
@@ -59,14 +60,14 @@ const Feed = () => {
       <section className={styles.postsWrapper}>
         <NewPost />
         <div className={styles.userPostsWrapper}>
-          {allPosts.map((item) => {
+          {allPosts?.map((item) => {
             return <PostCard key={item.id} post={item} />;
           })}
         </div>
       </section>
       <div className={styles.feedMoreOptions}>
         <h2>Suggested profiles</h2>
-        {suggestedProfiles.map((profile) => {
+        {suggestedProfiles?.map((profile) => {
           return <ProfileCard key={profile.id} profile={profile} />;
         })}
       </div>

@@ -45,7 +45,7 @@ export const getLoginCredentials = async (userDetails) => {
       .from("profile")
       .select("*")
       .eq("userId", data.session.user.id);
-    console.log({ userData });
+
     if (!error && !userError) {
       return {
         success: true,
