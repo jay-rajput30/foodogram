@@ -20,13 +20,15 @@ const PostProvider = ({ children }) => {
         .from("profile")
         .select("*")
         .eq("userId", userLoginDetails?.userId);
-      console.log({ profileData });
-      // console.log({ allPostsData, data, user: userLoginDetails?.userId });
+
       const { data: postData, postError } = await supabase
         .from("posts")
         .select("*")
-        .in("userId", [...profileData[0]?.following, userLoginDetails?.userId]);
-      console.log({ postData });
+        .in("userId", [
+          ...profileData[0]?.following.map((item) => item.userId),
+          userLoginDetails?.userId,
+        ]);
+
       if (!postError && !allPostsError) {
         setUserPost([...postData]);
         setAllPosts([...allPostsData]);

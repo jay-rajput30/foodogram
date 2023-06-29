@@ -51,15 +51,19 @@ export const getAllPosts = async () => {
 };
 export const getUserFollowingPosts = async (userId) => {
   try {
-    const { data, error } = await supabase
+    const { data: profileData, error } = await supabase
       .from("profile")
       .select()
       .eq("userId", userId);
-
-    const { postData, postError } = await supabase
+    console.log({
+      userProfileData: profileData,
+      arr: [...profileData[0].following],
+    });
+    const { data: postData, postError } = await supabase
       .from("posts")
       .select()
-      .in("userId", [...data[0].following, userId]);
+      .in("userId", [...profileData[0].following, userId]);
+    console.log({ userPostData: postData });
     if (!postError && !error) {
       return { success: true, data: postData, error: null };
     }
