@@ -23,6 +23,7 @@ const PostCard = ({ post }) => {
       console.error({ error: e });
     }
   };
+  console.log(userLoginDetails.loggedInProfile);
 
   const likeBtnClickHandler = async (userId, postId) => {
     const { data, success, error } = await updateLikes(userId, postId);
@@ -32,7 +33,7 @@ const PostCard = ({ post }) => {
       console.log({ data });
     }
   };
-
+  const dateFormat = new Date(post.created_at);
   const postCardClickHandler = (profileId) => {
     console.log("post card click handler called");
     navigate(`/profile/${profileId}`);
@@ -46,7 +47,11 @@ const PostCard = ({ post }) => {
         </figure>
         <div className={styles.postCardProfileHeaderDetails}>
           <h4 onClick={() => postCardClickHandler(post.userId)}>{post.name}</h4>
-          <small>12-06-2023</small>
+          <small>
+            {dateFormat.toLocaleDateString() +
+              " " +
+              dateFormat.toLocaleTimeString()}
+          </small>
         </div>
       </div>
       <div className={styles.postCardBody}>
@@ -60,14 +65,15 @@ const PostCard = ({ post }) => {
       <div className={styles.postCardUserActionsWrapper}>
         <span>
           <ThumbsUp
+            size="20"
             onClick={() =>
               likeBtnClickHandler(userLoginDetails?.userId, post?.id)
             }
           />
           {post.likes?.length}
         </span>
-        <MessageSquare />
-        <Bookmark />
+        <MessageSquare color="hsl(23, 93%, 76%)" size="20" />
+        <Bookmark size="20" />
       </div>
     </article>
   );

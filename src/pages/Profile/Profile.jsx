@@ -19,7 +19,6 @@ const Profile = () => {
       const { data, success } = await getProfile(id);
       const { data: postData, success: postSuccess } = await getPosts(id);
       if (success && postSuccess) {
-        console.log({ data, postData });
         setProfileData(data);
         setProfilePosts(postData);
       }
@@ -37,23 +36,36 @@ const Profile = () => {
         userLoginDetails?.loggedInProfile,
         profileData
       );
+      setProfileToggle((prev) => !prev);
       if (success) {
         setProfileToggle((prev) => !prev);
       }
     } catch (e) {
-      console.error({ e });
+      console.error({ error: e });
     }
   };
+  if (!profileData && !profilePosts) {
+    return <p>loading data...</p>;
+  }
+
+  console.log({ profileData });
   return (
     <div className={styles.profileWrapper}>
       <section className={styles.profileDetails}>
         <figure className={styles.profileDetailsImage}>
-          <div></div>
+          <img src={profileData.profileImg} />
         </figure>
         <div>
           <h2>{profileData?.firstName + " " + profileData?.lastName}</h2>
           <div className={styles.profileButtonWrapper}>
-            <button onClick={followBtnClickHandler}>follow</button>
+            <button onClick={followBtnClickHandler}>
+              {profileData.followers?.some(
+                (item) => item.userId === userLoginDetails.userId
+              )
+                ? "unfollow"
+                : "follow"}
+              {/* follow */}
+            </button>
           </div>
         </div>
       </section>

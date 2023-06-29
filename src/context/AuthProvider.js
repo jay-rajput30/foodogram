@@ -21,6 +21,8 @@ const AuthProvider = ({ children }) => {
         setLoginStatus,
         userLoginDetails,
         updateUserLoginDetails,
+        profileToggle,
+        setProfileToggle,
       }}
     >
       {children}

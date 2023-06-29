@@ -41,6 +41,7 @@
 .profileDetailsFollowerWrapper {
   display: flex;
   gap: 16px;
+  border-bottom: 1px solid var(--color-primary-100);
 }
 
 .profileDetailsFollowerWrapper div h4 {
@@ -55,7 +56,6 @@
   display: flex;
   gap: 16px;
   padding: 0 0 var(--space-2) var(--space-1);
-  border-bottom: 1px solid var(--color-primary-100);
 }
 
 .profilePosts {
