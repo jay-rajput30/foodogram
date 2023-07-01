@@ -83,3 +83,28 @@ export const getProfile = async (profileId) => {
     return { success: false, data: null, error: e };
   }
 };
+
+export const updateProfile = async (profileId, updatedProfile) => {
+  try {
+    const { data: profileData, profileError } = await supabase
+      .from("profile")
+      .select("*")
+      .eq("userId", profileId);
+
+    const { data: updateProfileData, updatedProfileError } = await supabase
+      .from("profile")
+      .update({
+        firstName: updatedProfile.firstName,
+        lastName: updatedProfile.lastName,
+        profileImg: updatedProfile.profileImg,
+        bio: updatedProfile.bio,
+      })
+      .eq("userId", profileId);
+    console.log({ profileData, updateProfileData });
+    if (!updatedProfileError) {
+      return { success: true, data: updateProfileData, error: null };
+    }
+  } catch (e) {
+    return { success: false, data: null, error: e };
+  }
+};
