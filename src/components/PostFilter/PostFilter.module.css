@@ -1,0 +1,24 @@
+.postFilterWrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border-top: var(--color-primary-100) solid;
+  border-bottom: var(--color-primary-100) solid;
+  padding: 0.2rem var(--space-2);
+  align-items: baseline;
+}
+.postFilterWrapper > div {
+  display: flex;
+  gap: 16px;
+  justify-content: space-evenly;
+}
+.postFilterWrapper div > button {
+  background-color: white;
+  font-size: var(--font-length-sm3);
+  padding: 0.2rem auto;
+  color: var(--color-alternate-300);
+}
+.postFilterWrapper div > button:focus {
+  background-color: var(--color-alternate-300);
+  color: var(--color-label);
+}

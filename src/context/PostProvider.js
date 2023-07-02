@@ -7,9 +7,10 @@ const postContext = createContext();
 const PostProvider = ({ children }) => {
   const [userPosts, setUserPost] = useState([]);
   const [allPosts, setAllPosts] = useState([]);
+  const [postFilterOption, setPostFilterOption] = useState("");
   const [postToggle, setPostToggle] = useState(false);
   const { userLoginDetails } = useAuth();
-  console.log({ userId: userLoginDetails?.userId });
+
   const fetchPosts = async () => {
     try {
       const { data: allPostsData, allPostsError } = await supabase
@@ -50,6 +51,8 @@ const PostProvider = ({ children }) => {
         setAllPosts,
         postToggle,
         setPostToggle,
+        postFilterOption,
+        setPostFilterOption,
       }}
     >
       {children}
@@ -67,6 +70,8 @@ export const usePost = () => {
     setAllPosts,
     postToggle,
     setPostToggle,
+    postFilterOption,
+    setPostFilterOption,
   } = useContext(postContext);
 
   return {
@@ -76,5 +81,7 @@ export const usePost = () => {
     setAllPosts,
     postToggle,
     setPostToggle,
+    postFilterOption,
+    setPostFilterOption,
   };
 };

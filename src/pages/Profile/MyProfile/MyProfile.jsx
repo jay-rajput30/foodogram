@@ -37,11 +37,6 @@ const MyProfile = () => {
 
   const editBtnClickHandler = async (profileId, updatedProfile) => {
     setShowEditForm(true);
-    // try {
-    //   const { data, success } = await updateProfile(profileId, updatedProfile);
-    // } catch (e) {
-    //   console.error(e);
-    // }
   };
 
   return (

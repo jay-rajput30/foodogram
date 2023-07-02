@@ -32,7 +32,6 @@ export const getPosts = async (profileId) => {
       .select()
       .eq("userId", profileId);
     if (!error) {
-      console.log({ data });
       return { success: true, data, error: null };
     }
   } catch (e) {
@@ -55,15 +54,12 @@ export const getUserFollowingPosts = async (userId) => {
       .from("profile")
       .select()
       .eq("userId", userId);
-    console.log({
-      userProfileData: profileData,
-      arr: [...profileData[0].following],
-    });
+
     const { data: postData, postError } = await supabase
       .from("posts")
       .select()
       .in("userId", [...profileData[0].following, userId]);
-    console.log({ userPostData: postData });
+
     if (!postError && !error) {
       return { success: true, data: postData, error: null };
     }

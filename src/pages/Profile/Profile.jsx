@@ -48,7 +48,6 @@ const Profile = () => {
     return <p>loading data...</p>;
   }
 
-  console.log({ profileData });
   return (
     <div className={styles.profileWrapper}>
       <section className={styles.profileDetails}>

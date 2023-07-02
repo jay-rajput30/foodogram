@@ -100,7 +100,15 @@ export const updateProfile = async (profileId, updatedProfile) => {
         bio: updatedProfile.bio,
       })
       .eq("userId", profileId);
-    console.log({ profileData, updateProfileData });
+
+    const { data: updatePostData, updatedPostError } = await supabase
+      .from("posts")
+      .update({
+        profileImg: updatedProfile.profileImg,
+      })
+      .eq("userId", profileId)
+      .select("*");
+
     if (!updatedProfileError) {
       return { success: true, data: updateProfileData, error: null };
     }
