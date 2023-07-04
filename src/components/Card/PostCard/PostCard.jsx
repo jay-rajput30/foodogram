@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./PostCard.module.css";
 import { supabase } from "../../../../backend/db/db.connect";
 import { Bookmark, MessageSquare, Share, ThumbsUp } from "react-feather";
-import {
-  updateBookmark,
-  updateLikes,
-} from "../../../../backend/controllers/post.controller";
+import { updateLikes } from "../../../../backend/controllers/post.controller";
 import { useAuth } from "../../../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { usePost } from "../../../context/PostProvider";
+import { useBookmark } from "../../../context/BookmarkProvider";
 
 const PostCard = ({ post }) => {
   const { userLoginDetails } = useAuth();
   const navigate = useNavigate();
   const { setPostToggle } = usePost();
+  const { bookmarkBtnClickHandler } = useBookmark();
   const fetchImage = () => {
     try {
       const { data, error } = supabase.storage
@@ -29,28 +28,15 @@ const PostCard = ({ post }) => {
 
   const likeBtnClickHandler = async (userId, postId) => {
     const { data, success, error } = await updateLikes(userId, postId);
-    console.log({ success, error });
     if (success) {
       setPostToggle((prev) => !prev);
-      console.log({ data });
     }
   };
   const dateFormat = new Date(post.created_at);
   const postCardClickHandler = (profileId) => {
-    console.log("post card click handler called");
     navigate(`/profile/${profileId}`);
   };
 
-  const bookmarkBtnClickHandler = async () => {
-    try {
-      const { data, success } = await updateBookmark(
-        post,
-        userLoginDetails?.userId
-      );
-    } catch (e) {
-      console.error({ error: e });
-    }
-  };
   return (
     <article className={styles.postCardWrapper}>
       <div className={styles.postCardHeader}>
@@ -85,7 +71,7 @@ const PostCard = ({ post }) => {
           {post.likes?.length}
         </span>
         <MessageSquare color="hsl(23, 93%, 76%)" size="20" />
-        <Bookmark size="20" onClick={bookmarkBtnClickHandler} />
+        <Bookmark size="20" onClick={() => bookmarkBtnClickHandler(post)} />
       </div>
     </article>
   );

@@ -126,40 +126,28 @@ export const updateBookmark = async (post, userId) => {
       .from("profile")
       .select("*")
       .eq("userId", userId);
-    console.log({ profileData, post });
+
     const bookmarkPostFound = profileData[0].bookmarks.some(
       (item) => item.id === post.id
     );
-    // console.log({ bookmarkPostFound });
+
     let updatedBookmarkArr = [];
     if (bookmarkPostFound) {
       updatedBookmarkArr = profileData[0].bookmarks.filter(
         (item) => item.id !== post.id
       );
-      const { data: updatedBookmarkData, updatedBookmarkError } = await supabase
-        .from("profile")
-        .update({
-          bookmarks: profileData[0].bookmarks.filter(
-            (item) => item.id !== post.id
-          ),
-        })
-        .eq("userId", userId);
-      console.log({ updatedBookmarkData });
-      if (!updatedBookmarkError) {
-        return { success: true, data: updatedBookmarkData[0], error: null };
-      }
     } else {
-      console.log("bookmark post not found");
       updatedBookmarkArr = [...profileData[0].bookmarks, post];
     }
 
     const { data: updatedBookmarkData, updatedBookmarkError } = await supabase
       .from("profile")
-      .update({ bookmarks: [...profileData[0].bookmarks, post] })
-      .eq("userId", userId);
-    console.log({ updatedBookmarkData });
+      .update({ bookmarks: updatedBookmarkArr })
+      .eq("userId", userId)
+      .select();
+
     if (!updatedBookmarkError) {
-      return { success: true, data: updatedBookmarkData[0], error: null };
+      return { success: true, data: updatedBookmarkArr, error: null };
     }
   } catch (e) {
     return { error: true, data: null, error: e };
