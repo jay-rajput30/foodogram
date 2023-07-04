@@ -6,12 +6,15 @@ import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
 import AuthProvider from "./context/AuthProvider";
 import PostProvider from "./context/PostProvider";
+import BookmarkProvider from "./context/BookmarkProvider";
 
 root.render(
   <Router>
     <AuthProvider>
       <PostProvider>
-        <App />
+        <BookmarkProvider>
+          <App />
+        </BookmarkProvider>
       </PostProvider>
     </AuthProvider>
   </Router>

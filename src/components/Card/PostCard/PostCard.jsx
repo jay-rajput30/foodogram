@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import styles from "./PostCard.module.css";
 import { supabase } from "../../../../backend/db/db.connect";
 import { Bookmark, MessageSquare, Share, ThumbsUp } from "react-feather";
-import { updateLikes } from "../../../../backend/controllers/post.controller";
+import {
+  updateBookmark,
+  updateLikes,
+} from "../../../../backend/controllers/post.controller";
 import { useAuth } from "../../../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { usePost } from "../../../context/PostProvider";
@@ -23,7 +26,6 @@ const PostCard = ({ post }) => {
       console.error({ error: e });
     }
   };
-  console.log(userLoginDetails.loggedInProfile);
 
   const likeBtnClickHandler = async (userId, postId) => {
     const { data, success, error } = await updateLikes(userId, postId);
@@ -39,6 +41,16 @@ const PostCard = ({ post }) => {
     navigate(`/profile/${profileId}`);
   };
 
+  const bookmarkBtnClickHandler = async () => {
+    try {
+      const { data, success } = await updateBookmark(
+        post,
+        userLoginDetails?.userId
+      );
+    } catch (e) {
+      console.error({ error: e });
+    }
+  };
   return (
     <article className={styles.postCardWrapper}>
       <div className={styles.postCardHeader}>
@@ -73,7 +85,7 @@ const PostCard = ({ post }) => {
           {post.likes?.length}
         </span>
         <MessageSquare color="hsl(23, 93%, 76%)" size="20" />
-        <Bookmark size="20" />
+        <Bookmark size="20" onClick={bookmarkBtnClickHandler} />
       </div>
     </article>
   );

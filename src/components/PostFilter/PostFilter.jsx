@@ -9,14 +9,9 @@ const PostFilter = () => {
   };
   return (
     <div className={styles.postFilterWrapper}>
-      <small>Sort options </small>
-      <div>
-        <button onClick={() => filterBtnClickHandler("oldest")}>oldest</button>
-        <button onClick={() => filterBtnClickHandler("newest")}>newest</button>
-        <button onClick={() => filterBtnClickHandler("popular")}>
-          popular
-        </button>
-      </div>
+      <small onClick={() => filterBtnClickHandler("oldest")}>oldest</small>
+      <small onClick={() => filterBtnClickHandler("newest")}>newest</small>
+      <small onClick={() => filterBtnClickHandler("popular")}>popular</small>
     </div>
   );
 };

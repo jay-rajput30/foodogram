@@ -7,18 +7,17 @@
   padding: 0.2rem var(--space-2);
   align-items: baseline;
 }
-.postFilterWrapper > div {
+.postFilterWrapper {
   display: flex;
   gap: 16px;
   justify-content: space-evenly;
 }
-.postFilterWrapper div > button {
-  background-color: white;
+.postFilterWrapper > small {
   font-size: var(--font-length-sm3);
-  padding: 0.2rem auto;
+  display: inline-block;
+  border-bottom: 2px white solid;
   color: var(--color-alternate-300);
 }
-.postFilterWrapper div > button:focus {
-  background-color: var(--color-alternate-300);
-  color: var(--color-label);
+.postFilterWrapper > small:focus {
+  border-bottom: 2px solid var(--color-alternate-300);
 }
