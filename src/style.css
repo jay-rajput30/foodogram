@@ -190,3 +190,7 @@ p {
   background-color: var(--color-primary-100);
   box-shadow: 2px 3px 3px var(--color-primary-700);
 }
+
+@media screen and (min-width: 768px) {
+  
+}

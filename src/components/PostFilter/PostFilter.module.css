@@ -1,0 +1,23 @@
+.postFilterWrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border-top: var(--color-primary-100) solid;
+  border-bottom: var(--color-primary-100) solid;
+  padding: 0.2rem var(--space-2);
+  align-items: baseline;
+}
+.postFilterWrapper {
+  display: flex;
+  gap: 16px;
+  justify-content: space-evenly;
+}
+.postFilterWrapper > small {
+  font-size: var(--font-length-sm3);
+  display: inline-block;
+  border-bottom: 2px white solid;
+  color: var(--color-alternate-300);
+}
+.postFilterWrapper > small:focus {
+  border-bottom: 2px solid var(--color-alternate-300);
+}

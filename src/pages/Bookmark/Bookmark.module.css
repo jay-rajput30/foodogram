@@ -1,0 +1,14 @@
+.bookmarkWrapper {
+  display: flex;
+  flex-direction: column;
+  margin: var(--space-9) auto;
+  width: 90%;
+  display: flex;
+  gap: 16px;
+}
+
+@media screen and (min-width: 768px) {
+  .bookmarkWrapper {
+    width: 50vw;
+  }
+}

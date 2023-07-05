@@ -7,6 +7,7 @@ import Explore from "./pages/Explore/Explore.";
 import Bookmark from "./pages/Bookmark/Bookmark";
 import Profile from "./pages/Profile/Profile";
 import MyProfile from "./pages/Profile/MyProfile/MyProfile";
+import SinglePost from "./pages/SinglePost/SinglePost";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/bookmark" element={<Bookmark />} />
         <Route path="/profile" element={<MyProfile />} />
         <Route path="/profile/:id" element={<Profile />} />
+        <Route path="/post/:id" element={<SinglePost />} />
         <Route path="signup" element={<SignUp />} />
       </Routes>
     </div>

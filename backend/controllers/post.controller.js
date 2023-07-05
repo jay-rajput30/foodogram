@@ -32,8 +32,22 @@ export const getPosts = async (profileId) => {
       .select()
       .eq("userId", profileId);
     if (!error) {
-      console.log({ data });
       return { success: true, data, error: null };
+    }
+  } catch (e) {
+    return { success: false, data: null, error: e };
+  }
+};
+
+export const getSinglePost = async (postId) => {
+  try {
+    const { data: postData, postError } = await supabase
+      .from("posts")
+      .select("*")
+      .eq("id", postId);
+
+    if (!postError) {
+      return { success: true, data: postData[0], error: null };
     }
   } catch (e) {
     return { success: false, data: null, error: e };
@@ -55,15 +69,12 @@ export const getUserFollowingPosts = async (userId) => {
       .from("profile")
       .select()
       .eq("userId", userId);
-    console.log({
-      userProfileData: profileData,
-      arr: [...profileData[0].following],
-    });
+
     const { data: postData, postError } = await supabase
       .from("posts")
       .select()
       .in("userId", [...profileData[0].following, userId]);
-    console.log({ userPostData: postData });
+
     if (!postError && !error) {
       return { success: true, data: postData, error: null };
     }
@@ -121,5 +132,39 @@ export const getSuggestProfiles = async () => {
     }
   } catch (e) {
     return { success: false, data: null, error: e };
+  }
+};
+
+export const updateBookmark = async (post, userId) => {
+  try {
+    const { data: profileData, profileError } = await supabase
+      .from("profile")
+      .select("*")
+      .eq("userId", userId);
+
+    const bookmarkPostFound = profileData[0].bookmarks.some(
+      (item) => item.id === post.id
+    );
+
+    let updatedBookmarkArr = [];
+    if (bookmarkPostFound) {
+      updatedBookmarkArr = profileData[0].bookmarks.filter(
+        (item) => item.id !== post.id
+      );
+    } else {
+      updatedBookmarkArr = [...profileData[0].bookmarks, post];
+    }
+
+    const { data: updatedBookmarkData, updatedBookmarkError } = await supabase
+      .from("profile")
+      .update({ bookmarks: updatedBookmarkArr })
+      .eq("userId", userId)
+      .select();
+
+    if (!updatedBookmarkError) {
+      return { success: true, data: updatedBookmarkArr, error: null };
+    }
+  } catch (e) {
+    return { error: true, data: null, error: e };
   }
 };

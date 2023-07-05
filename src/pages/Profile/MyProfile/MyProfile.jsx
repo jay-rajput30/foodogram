@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
 import styles from "./MyProfile.module.css";
 import { useAuth } from "../../../context/AuthProvider";
-import { getProfile } from "../../../../backend/controllers/profile.controller";
+import {
+  getProfile,
+  updateProfile,
+} from "../../../../backend/controllers/profile.controller";
 import PostCard from "../../../components/Card/PostCard/PostCard";
 import { getPosts } from "../../../../backend/controllers/post.controller";
+import EditProfileForm from "../../../components/EditProfileForm/EditProfileForm";
+import { usePost } from "../../../context/PostProvider";
 
 const MyProfile = () => {
   const [profileData, setProfileData] = useState([]);
   const [profilePosts, setProfilePosts] = useState([]);
   const { userLoginDetails } = useAuth();
-
+  const [showEditForm, setShowEditForm] = useState(false);
+  const { postToggle } = usePost();
   const fetchProfile = async () => {
     try {
       const { data, success } = await getProfile(userLoginDetails?.userId);
@@ -27,7 +33,11 @@ const MyProfile = () => {
   };
   useEffect(() => {
     fetchProfile();
-  }, []);
+  }, [postToggle]);
+
+  const editBtnClickHandler = async (profileId, updatedProfile) => {
+    setShowEditForm(true);
+  };
 
   return (
     <div className={styles.profileWrapper}>
@@ -51,7 +61,9 @@ const MyProfile = () => {
       </section>
       <p>{profileData?.bio}</p>
       <div className={styles.profileButtonWrapper}>
-        <button>edit profile</button>
+        <button onClick={() => editBtnClickHandler(profileData.userId)}>
+          edit profile
+        </button>
         <button>bookmarks</button>
       </div>
       <section className={styles.profilePosts}>
@@ -59,6 +71,12 @@ const MyProfile = () => {
           return <PostCard key={post?.id} post={post} />;
         })}
       </section>
+      {showEditForm && (
+        <EditProfileForm
+          profile={profileData}
+          setShowEditForm={setShowEditForm}
+        />
+      )}
     </div>
   );
 };

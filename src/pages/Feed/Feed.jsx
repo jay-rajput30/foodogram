@@ -11,15 +11,23 @@ import NewPost from "./NewPost/NewPost";
 import PostCard from "../../components/Card/PostCard/PostCard";
 import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
 import { getSuggestProfiles } from "../../../backend/controllers/post.controller";
+import PostFilter from "../../components/PostFilter/PostFilter";
 
 const Feed = () => {
   const location = useLocation();
   const { userLoginDetails } = useAuth();
-  const { userPosts, setUserPost, setPostToggle, allPosts, setAllPosts } =
-    usePost();
+  const {
+    userPosts,
+    setUserPost,
+    setPostToggle,
+    allPosts,
+    setAllPosts,
+    postFilterOption,
+    setPostFilterOption,
+  } = usePost();
   const [suggestedProfiles, setSuggestedProfiles] = useState([]);
   const checkPath = checkPageLocation(location.pathname);
-  console.log({ allPosts });
+
   const fetchPosts = async () => {
     try {
       // const { data: allPostsData, allPostsError } = await supabase
@@ -38,7 +46,7 @@ const Feed = () => {
 
       const { data: suggestedProfileData, success } =
         await getSuggestProfiles();
-      
+
       if (success) {
         // setUserPost(postData[0]);
         // setAllPosts(allPostsData[0]);
@@ -52,15 +60,33 @@ const Feed = () => {
   useEffect(() => {
     fetchPosts();
   }, []);
-
+  const getSortedData = (data, filterOptions) => {
+    switch (filterOptions) {
+      case "oldest":
+        return [...data].sort(
+          (a, b) => new Date(a.created_at) - new Date(b.created_at)
+        );
+      case "newest":
+        return [...data].sort(
+          (a, b) => new Date(b.created_at) - new Date(a.created_at)
+        );
+      case "popular":
+        return [...data].sort((a, b) => b.likes.length - a.likes.length);
+      default:
+        return data;
+    }
+  };
+  const sortedData = getSortedData(allPosts, postFilterOption);
+  console.log({ sortedData });
   return (
     <div className={styles.feedWrapper}>
       {!checkPath && <MobileNavbar />}
       {!checkPath && <DesktopNavbar />}
       <section className={styles.postsWrapper}>
         <NewPost />
+        <PostFilter />
         <div className={styles.userPostsWrapper}>
-          {allPosts?.map((item) => {
+          {sortedData?.map((item) => {
             return <PostCard key={item.id} post={item} />;
           })}
         </div>
