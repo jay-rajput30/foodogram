@@ -1,14 +1,11 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./AuthProvider";
 import { updateBookmark } from "../../backend/controllers/post.controller";
 
-const bookmarkContext = createContext();
+const bookmarkContext = createContext({});
 
 const BookmarkProvider = ({ children }) => {
-  const { userLoginDetails } = useAuth();
-  const [bookmark, setBookmark] = useState(
-    userLoginDetails?.loggedInProfile?.bookmarks
-  );
+  const { userLoginDetails, setUserloginDetails } = useAuth();
 
   const bookmarkBtnClickHandler = async (post) => {
     try {
@@ -17,16 +14,21 @@ const BookmarkProvider = ({ children }) => {
         userLoginDetails?.userId
       );
       if (success) {
-        setBookmark({ ...bookmark, data });
+        setUserloginDetails({
+          ...userLoginDetails,
+          loggedInProfile: {
+            ...userLoginDetails.loggedInProfile,
+            bookmarks: data,
+          },
+        });
+        console.log({ data });
       }
     } catch (e) {
       console.error({ error: e });
     }
   };
   return (
-    <bookmarkContext.Provider
-      value={{ bookmark, setBookmark, bookmarkBtnClickHandler }}
-    >
+    <bookmarkContext.Provider value={{ bookmarkBtnClickHandler }}>
       {children}
     </bookmarkContext.Provider>
   );
@@ -35,8 +37,8 @@ const BookmarkProvider = ({ children }) => {
 export default BookmarkProvider;
 
 export const useBookmark = () => {
-  const { bookmark, setBookmark, bookmarkBtnClickHandler } =
+  const {   bookmarkBtnClickHandler } =
     useContext(bookmarkContext);
 
-  return { bookmark, setBookmark, bookmarkBtnClickHandler };
+  return {  bookmarkBtnClickHandler };
 };

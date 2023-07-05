@@ -20,6 +20,7 @@ const AuthProvider = ({ children }) => {
         loginStatus,
         setLoginStatus,
         userLoginDetails,
+        setUserloginDetails,
         updateUserLoginDetails,
         profileToggle,
         setProfileToggle,
@@ -35,6 +36,7 @@ export const useAuth = () => {
     loginStatus,
     setLoginStatus,
     userLoginDetails,
+    setUserloginDetails,
     updateUserLoginDetails,
     profileToggle,
     setProfileToggle,
@@ -45,6 +47,7 @@ export const useAuth = () => {
     userLoginDetails,
     updateUserLoginDetails,
     profileToggle,
+    setUserloginDetails,
     setProfileToggle,
   };
 };

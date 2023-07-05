@@ -1,11 +1,20 @@
 import React, { useState } from "react";
-import { usePost } from "../../context/PostProvider";
-import { useBookmark } from "../../context/BookmarkProvider";
 
+import styles from "./Bookmark.module.css";
+import PostCard from "../../components/Card/PostCard/PostCard";
+import { useAuth } from "../../context/AuthProvider";
+// import { useBookmark } from "../../context/BookmarkProvider";
 const Bookmark = () => {
+  // const { bookmark } = useBookmark();
+  const { userLoginDetails } = useAuth();
+
   return (
     <div>
-      <p>bookmark</p>
+      <div className={styles.bookmarkWrapper}>
+        {userLoginDetails?.loggedInProfile?.bookmarks.map((item) => {
+          return <PostCard post={item} key={item.id} />;
+        })}
+      </div>
     </div>
   );
 };

@@ -38,6 +38,21 @@ export const getPosts = async (profileId) => {
     return { success: false, data: null, error: e };
   }
 };
+
+export const getSinglePost = async (postId) => {
+  try {
+    const { data: postData, postError } = await supabase
+      .from("posts")
+      .select("*")
+      .eq("id", postId);
+
+    if (!postError) {
+      return { success: true, data: postData[0], error: null };
+    }
+  } catch (e) {
+    return { success: false, data: null, error: e };
+  }
+};
 export const getAllPosts = async () => {
   try {
     const { data, error } = await supabase.from("posts").select();

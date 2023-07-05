@@ -13,6 +13,7 @@ const PostCard = ({ post }) => {
   const navigate = useNavigate();
   const { setPostToggle } = usePost();
   const { bookmarkBtnClickHandler } = useBookmark();
+
   const fetchImage = () => {
     try {
       const { data, error } = supabase.storage
@@ -37,6 +38,12 @@ const PostCard = ({ post }) => {
     navigate(`/profile/${profileId}`);
   };
 
+  const bookmarkItemFound = userLoginDetails?.loggedInProfile?.bookmarks.some(
+    (item) => item.id === post.id
+  );
+  const commentBtnClickHandler = () => {
+    navigate(`/post/${post.id}`);
+  };
   return (
     <article className={styles.postCardWrapper}>
       <div className={styles.postCardHeader}>
@@ -70,8 +77,18 @@ const PostCard = ({ post }) => {
           />
           {post.likes?.length}
         </span>
-        <MessageSquare color="hsl(23, 93%, 76%)" size="20" />
-        <Bookmark size="20" onClick={() => bookmarkBtnClickHandler(post)} />
+        <MessageSquare
+          color="hsl(23, 93%, 76%)"
+          size="20"
+          onClick={commentBtnClickHandler}
+        />
+        <Bookmark
+          size="20"
+          onClick={() => bookmarkBtnClickHandler(post)}
+          fill={`${
+            bookmarkItemFound ? "hsl(23, 49%, 35%)" : "hsl(30, 20%, 96%)"
+          }`}
+        />
       </div>
     </article>
   );
