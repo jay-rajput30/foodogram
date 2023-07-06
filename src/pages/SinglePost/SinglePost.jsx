@@ -3,6 +3,7 @@ import styles from "./SinglePost.module.css";
 import { useParams } from "react-router-dom";
 import { getSinglePost } from "../../../backend/controllers/post.controller";
 import { Bookmark, Share, ThumbsUp } from "react-feather";
+import AddCommentForm from "../../components/AddCommentForm/AddCommentForm";
 import CommentCard from "../../components/Card/CommentCard/CommentCard";
 
 const SinglePost = () => {
@@ -33,6 +34,7 @@ const SinglePost = () => {
           <h4>{singlePost?.name}</h4>
           <small>{singlePost?.username}</small>
         </div>
+        <small>{new Date(singlePost.created_at).toLocaleString()}</small>
       </header>
       <main className={styles.singlePostMain}>
         <p>{singlePost?.text}</p>
@@ -43,7 +45,12 @@ const SinglePost = () => {
           <Bookmark color="var(--color-primary-300)" />
           <Share color="var(--color-primary-300)" />
         </div>
-        <CommentCard postId={id} />
+        <AddCommentForm postId={id} setSinglePost={setSinglePost} />
+        <div className={styles.singlePostCommentWrapper}>
+          {singlePost?.comments.map((item) => {
+            return <CommentCard comment={item} />;
+          })}
+        </div>
       </footer>
     </div>
   );
