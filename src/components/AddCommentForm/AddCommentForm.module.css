@@ -1,0 +1,11 @@
+.AddCommentFormWrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: var(--space-2) 0;
+}
+.AddCommentFormWrapper > * {
+  flex: 1;
+}

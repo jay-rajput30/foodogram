@@ -1,0 +1,42 @@
+.commentCardWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  border: 2px solid var(--color-secondary-700);
+  padding: var(--space-1);
+  background-color: var(--color-secondary-100);
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px var(--color-secondary-700),
+    1px 2px 2px var(--color-secondary-700);
+  justify-content: center;
+}
+
+.commentCardTime {
+  margin-top: 0.28rem;
+  color: var(--color-primary-300);
+}
+.commentCardHeader {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid var(--color-secondary-700);
+  padding-bottom: var(--space-1);
+}
+.commentCardHeader > figure {
+  height: 50px;
+  width: 50px;
+}
+
+.commentCardDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.commentCardDetails > small {
+  color: var(--color-secondary-700);
+}
+
+.commentCardBody > p {
+  padding-left: var(--space-1);
+  font-size: var(--font-length-md2);
+}

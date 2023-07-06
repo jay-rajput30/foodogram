@@ -16,7 +16,7 @@ export const createPost = async (postDetails) => {
         name: `${profile[0].firstName} ${profile[0].lastName}`,
       })
       .select();
-    console.log({ postDetails, profile: profile[0] });
+
     if (!error && !postError) {
       return { success: true, data, error: null };
     }
@@ -127,7 +127,6 @@ export const getSuggestProfiles = async () => {
       .select("*")
       .range(0, 2);
     if (!error) {
-      console.log({ profiles });
       return { success: true, data: profiles, error: null };
     }
   } catch (e) {
@@ -166,5 +165,40 @@ export const updateBookmark = async (post, userId) => {
     }
   } catch (e) {
     return { error: true, data: null, error: e };
+  }
+};
+//name, profileImg, username, commentText, commentLikes
+export const updateComment = async (commentData, user) => {
+  try {
+    const { data: userPostData, userPostError } = await supabase
+      .from("posts")
+      .select("*")
+      .eq("id", commentData.postId);
+
+    const { data: updateCommentData, updateCommentError } = await supabase
+      .from("posts")
+      .update({
+        comments: [
+          ...userPostData[0].comments,
+          {
+            id: crypto.randomUUID(),
+            userId: user.id,
+            name: userPostData[0].name,
+            username: userPostData[0].username,
+            profileImg: userPostData[0].profileImg,
+            commentText: commentData.commentText,
+            commentLikes: [],
+            created_at: Date.now(),
+          },
+        ],
+      })
+      .eq("id", commentData.postId)
+      .select("*");
+
+    if (!updateCommentError) {
+      return { success: true, data: updateCommentData[0], error: null };
+    }
+  } catch (e) {
+    return { success: false, data: null, error: e };
   }
 };
