@@ -168,3 +168,34 @@ export const updateBookmark = async (post, userId) => {
     return { error: true, data: null, error: e };
   }
 };
+//name, profileImg, username, commentText, commentLikes
+export const updateComment = async (commentData, user) => {
+  try {
+    console.log({ commentData, user });
+    const { data: userPostData, userPostError } = await supabase
+      .from("posts")
+      .select("*")
+      .eq("id", commentData.postId);
+
+    const { data: updateCommentData, updateCommentError } = await supabase
+      .from("posts")
+      .update({
+        comments: [
+          ...userPostData[0].comments,
+          {
+            id: crypto.randomUUID(),
+            userId: user.id,
+            name: `${userPostData[0].firstName} ${userPostData[0].lastName}`,
+            username: userPostData[0].username,
+            profileImg: userPostData[0].profileImg,
+            commentText: commentData.commentText,
+            commentLikes: [],
+          },
+        ],
+      })
+      .eq("id", commentData.postId);
+    return { success: true, data: commentData, error: null };
+  } catch (e) {
+    return { success: false, data: null, error: e };
+  }
+};
