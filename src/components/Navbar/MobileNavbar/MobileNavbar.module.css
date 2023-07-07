@@ -3,7 +3,7 @@
   position: fixed;
   bottom: 0;
   border: 2px solid var(--color-primary-700);
-  padding: var(--space-1) var(--space-2);
+  padding: var(--space-2);
   display: flex;
   justify-content: space-between;
   background-color: var(--color-primary-100);
