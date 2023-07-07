@@ -1,14 +1,21 @@
 .bookmarkWrapper {
   display: flex;
+  gap: 16px;
+}
+
+.bookmarkWrapper > div {
+  display: flex;
   flex-direction: column;
-  margin: var(--space-9) auto;
+  margin: var(--space-4) auto var(--space-4) var(--space-2);
+
   width: 90%;
   display: flex;
   gap: 16px;
 }
 
 @media screen and (min-width: 768px) {
-  .bookmarkWrapper {
-    width: 50vw;
+  .bookmarkWrapper > div {
+    max-width: 550px;
+    padding-left: var(--space-6);
   }
 }

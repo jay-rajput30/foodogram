@@ -36,6 +36,10 @@
     width: 50vw;
     margin: var(--space-1) var(--space-2) var(--space-1) var(--space-6);
   }
+  /* 
+  .feedWrapper {
+    max-width: 550px;
+  } */
   .feedMoreOptions {
     display: flex;
     flex-direction: column;
