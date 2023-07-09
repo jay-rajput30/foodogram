@@ -36,6 +36,9 @@ const PostCard = ({ post }) => {
   const dateFormat = new Date(post.created_at);
   const postCardClickHandler = (profileId) => {
     navigate(`/profile/${profileId}`);
+    if (userLoginDetails.userId === profileId) {
+      navigate("/profile");
+    }
   };
 
   const bookmarkItemFound = userLoginDetails?.loggedInProfile?.bookmarks.some(

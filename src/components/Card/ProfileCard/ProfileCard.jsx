@@ -7,7 +7,7 @@ const ProfileCard = ({ profile }) => {
         <img className={styles.profileCardPhoto} src={profile.profileImg} />
       </figure>
       <div className={styles.profileCardDetails}>
-        <h3>{profile.firstName + " " + profile.lastName}</h3>
+        <h4>{profile.username}</h4>
         <button className={styles.profileCardFollowButton}>details</button>
       </div>
     </article>

@@ -7,7 +7,7 @@ import { getPosts } from "../../../../backend/controllers/post.controller";
 import EditProfileForm from "../../../components/EditProfileForm/EditProfileForm";
 import { usePost } from "../../../context/PostProvider";
 import { checkPageLocation } from "../../../utils/utls,";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import MobileNavbar from "../../../components/Navbar/MobileNavbar/MobileNavbar";
 import DesktopNavbar from "../../../components/Navbar/DesktopNavbar/DesktopNavbar";
 
@@ -19,7 +19,7 @@ const MyProfile = () => {
   const { postToggle } = usePost();
   const location = useLocation();
   const checkPath = checkPageLocation(location.pathname);
-
+  const navigate = useNavigate();
   const fetchProfile = async () => {
     try {
       const { data, success } = await getProfile(userLoginDetails?.userId);
@@ -41,6 +41,10 @@ const MyProfile = () => {
 
   const editBtnClickHandler = async (profileId, updatedProfile) => {
     setShowEditForm(true);
+  };
+
+  const bookmarkBtnClickHandler = () => {
+    navigate("/bookmark");
   };
 
   return (
@@ -71,7 +75,7 @@ const MyProfile = () => {
           <button onClick={() => editBtnClickHandler(profileData.userId)}>
             edit profile
           </button>
-          <button>bookmarks</button>
+          <button onClick={bookmarkBtnClickHandler}>bookmarks</button>
         </div>
         <section className={styles.profilePosts}>
           {profilePosts?.map((post) => {

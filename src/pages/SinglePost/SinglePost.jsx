@@ -37,8 +37,11 @@ const SinglePost = () => {
       {!checkPath && <MobileNavbar />}
       {!checkPath && <DesktopNavbar />}
       <div className={styles.singlePostWrapper}>
-        <ArrowLeft onClick={arrowBtnClickHandler} />
-        <div>
+        <div className={styles.singlePostHeading}>
+          <ArrowLeft onClick={arrowBtnClickHandler} />
+          <p>Post</p>
+        </div>
+        <div className={styles.singlePost}>
           <header className={styles.singlePostHeader}>
             <figure>
               <img src={singlePost?.profileImg} alt={singlePost?.profileImg} />
