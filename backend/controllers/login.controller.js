@@ -18,6 +18,7 @@ export const signUpUser = async (userDetails) => {
         following: [],
         bookmarks: [],
         profileImg: userDetails.profileImg,
+        portfolioUrl: userDetails.portfolioUrl,
       })
       .select();
 

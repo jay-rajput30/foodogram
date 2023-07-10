@@ -30,7 +30,7 @@ const Explore = () => {
   useEffect(() => {
     fetchPosts();
   }, []);
-  console.log({ allPosts });
+
   return (
     <div className={styles.exploreWrapper}>
       {!checkPath && <MobileNavbar />}

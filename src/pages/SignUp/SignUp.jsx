@@ -50,6 +50,7 @@ const SignUp = () => {
         lastName: formData?.lastName,
         username: formData.username,
         profileImg: getAvatar(),
+        portfolioUrl: "",
       });
       if (success) {
         navigate("/");

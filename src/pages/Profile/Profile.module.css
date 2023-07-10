@@ -1,5 +1,13 @@
 .profileMainWrapper {
   display: flex;
+  height: 100%;
+}
+
+.profileHeading {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  border-bottom: var(--color-primary-300) solid 1px;
 }
 
 .profileWrapper {

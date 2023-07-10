@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import {
   followUser,
   getProfile,
@@ -11,6 +11,7 @@ import PostCard from "../../components/Card/PostCard/PostCard";
 import { checkPageLocation } from "../../utils/utls,";
 import MobileNavbar from "../../components/Navbar/MobileNavbar/MobileNavbar";
 import DesktopNavbar from "../../components/Navbar/DesktopNavbar/DesktopNavbar";
+import { ArrowLeft } from "react-feather";
 
 const Profile = () => {
   const [profileData, setProfileData] = useState([]);
@@ -19,6 +20,7 @@ const Profile = () => {
   const { id } = useParams();
   const location = useLocation();
   const checkPath = checkPageLocation(location.pathname);
+  const navigate = useNavigate();
   const fetchProfile = async () => {
     try {
       const { data, success } = await getProfile(id);
@@ -58,6 +60,10 @@ const Profile = () => {
       {!checkPath && <MobileNavbar />}
       {!checkPath && <DesktopNavbar />}
       <div className={styles.profileWrapper}>
+        <div className={styles.profileHeading}>
+          <ArrowLeft onClick={() => navigate("/feed")} />
+          <p>Profile</p>
+        </div>
         <section className={styles.profileDetails}>
           <figure className={styles.profileDetailsImage}>
             <img src={profileData.profileImg} />
@@ -77,6 +83,9 @@ const Profile = () => {
           </div>
         </section>
         <p>{profileData?.bio}</p>
+        {profileData?.portfolioUrl && (
+          <p>portfolio: {profileData?.portfolioUrl}</p>
+        )}
         <div className={styles.profileDetailsFollowerWrapper}>
           <div>
             <h4>followers</h4>

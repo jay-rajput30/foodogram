@@ -1,8 +1,19 @@
 import React from "react";
 import styles from "./PostCard.module.css";
 import { supabase } from "../../../../backend/db/db.connect";
-import { Bookmark, MessageSquare, Share, ThumbsUp } from "react-feather";
-import { updateLikes } from "../../../../backend/controllers/post.controller";
+import {
+  Bookmark,
+  Edit2,
+  MessageSquare,
+  MoreVertical,
+  Share,
+  ThumbsUp,
+  Trash2,
+} from "react-feather";
+import {
+  deletePost,
+  updateLikes,
+} from "../../../../backend/controllers/post.controller";
 import { useAuth } from "../../../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { usePost } from "../../../context/PostProvider";
@@ -50,8 +61,17 @@ const PostCard = ({ post }) => {
   const userFound = post.likes.find(
     (like) => like.userId === userLoginDetails.userId
   );
+  const deleteBtnClickHandler = async () => {
+    try {
+      const { success, data } = await deletePost(post.id);
+      if (success) {
+        setPostToggle((prev) => !prev);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
-  console.log;
   return (
     <article className={styles.postCardWrapper}>
       <div className={styles.postCardHeader}>
@@ -66,6 +86,12 @@ const PostCard = ({ post }) => {
               dateFormat.toLocaleTimeString()}
           </small>
         </div>
+        {post.userId === userLoginDetails.userId && (
+          <div className={styles.moreIcon}>
+            <Edit2 size="16" />
+            <Trash2 size="16" onClick={deleteBtnClickHandler} />
+          </div>
+        )}
       </div>
       <div className={styles.postCardBody}>
         <p>{post?.text}</p>

@@ -20,6 +20,7 @@ const MyProfile = () => {
   const location = useLocation();
   const checkPath = checkPageLocation(location.pathname);
   const navigate = useNavigate();
+  console.log({ profileData });
   const fetchProfile = async () => {
     try {
       const { data, success } = await getProfile(userLoginDetails?.userId);
@@ -79,6 +80,9 @@ const MyProfile = () => {
           </div>
         </section>
         <p>{profileData?.bio}</p>
+        {profileData?.portfolioUrl && (
+          <p>portfolio: {profileData?.portfolioUrl}</p>
+        )}
         <div className={styles.profileButtonWrapper}>
           <button onClick={() => editBtnClickHandler(profileData.userId)}>
             edit profile

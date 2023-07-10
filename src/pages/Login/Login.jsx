@@ -31,6 +31,23 @@ const Login = () => {
     }
   };
 
+  const guestBtnClickHandler = async () => {
+    try {
+      const { success, data } = await getLoginCredentials({
+        email: "adarsh@gmail.com",
+        password: "123456",
+      });
+      if (success) {
+        setLoginStatus(true);
+        updateUserLoginDetails(data);
+        setPostToggle((prev) => !prev);
+        navigate("/feed");
+      }
+    } catch (e) {
+      console.error({ error: e });
+    }
+  };
+
   return (
     <div className={styles.loginWrapper}>
       <form
@@ -61,7 +78,11 @@ const Login = () => {
         {errors.password && (
           <p className={styles.loginErrorMessage}>{errors.password?.message}</p>
         )}
-        <button type="submit">login</button>
+        <div className={styles.loginBtnWrapper}>
+          <button type="submit">login</button>
+          <button onClick={guestBtnClickHandler}>guest login</button>
+        </div>
+
         <p className={styles.signUpText}>
           click <Link to="/signup">here</Link> to sign up
         </p>
