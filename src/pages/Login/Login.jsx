@@ -13,7 +13,7 @@ const Login = () => {
   } = useForm();
   const { setPostToggle } = usePost();
   const navigate = useNavigate();
-  const { updateUserLoginDetails } = useAuth();
+  const { updateUserLoginDetails, setLoginStatus } = useAuth();
   const formSubmitHandler = async (loginData) => {
     try {
       const { success, data } = await getLoginCredentials({
@@ -21,6 +21,7 @@ const Login = () => {
         password: loginData.password,
       });
       if (success) {
+        setLoginStatus(true);
         updateUserLoginDetails(data);
         setPostToggle((prev) => !prev);
         navigate("/feed");

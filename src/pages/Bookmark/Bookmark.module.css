@@ -1,21 +1,39 @@
 .bookmarkWrapper {
   display: flex;
-  gap: 16px;
+  gap: 8px;
 }
 
-.bookmarkWrapper > div {
+.bookmarkPostsWrapper {
   display: flex;
   flex-direction: column;
-  margin: var(--space-4) auto var(--space-4) var(--space-2);
-
-  width: 90%;
+  padding-top: var(--space-4);
+  flex: 2;
   display: flex;
   gap: 16px;
+  width: 90%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.feedMoreOptions {
+  display: none;
 }
 
 @media screen and (min-width: 768px) {
-  .bookmarkWrapper > div {
-    max-width: 550px;
-    padding-left: var(--space-6);
+  .bookmarkPostsWrapper {
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .bookmarkWrapper {
+    padding-right: var(--space-2);
+  }
+  .feedMoreOptions {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 16px;
+    margin-top: var(--space-3);
   }
 }

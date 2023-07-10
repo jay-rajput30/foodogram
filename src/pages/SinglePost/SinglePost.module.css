@@ -2,11 +2,16 @@
   display: flex;
 }
 
+.singlePostHeading {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--color-primary-100);
+}
 .singlePostWrapper {
   padding: var(--space-2) 0;
 }
 
-.singlePostWrapper > div {
+.singlePost {
   height: 100%;
   padding: var(--space-2);
 }

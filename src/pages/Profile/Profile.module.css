@@ -1,8 +1,13 @@
+.profileMainWrapper {
+  display: flex;
+}
+
 .profileWrapper {
-  margin: var(--space-8) var(--space-1);
+  margin-top: var(--space-2);
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 100%;
 }
 .profileWrapper > p {
   padding: 0 0 var(--space-1) var(--space-1);
@@ -11,8 +16,6 @@
 }
 
 .profileDetailsImage {
-  flex: 1;
-
   border-radius: 50%;
   margin: var(--space-1);
 }
@@ -27,15 +30,28 @@
 }
 
 .profileDetails > div {
-  margin: var(--space-1);
-  flex: 2;
+  /* margin: var(--space-1); */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
 }
 
-.profileDetails > div h2 {
+.profileDetails > div > h2 {
   color: var(--color-primary-700);
 }
 
+.profileDetails > div > button {
+  padding: 0.2rem 0.4rem;
+  font-size: var(--font-length-sm3);
+}
+
+.profileDetails > div > small {
+  color: var(--color-primary-100);
+}
+
 .profileDetailsFollowerWrapper {
+  margin-left: var(--space-1);
   display: flex;
   gap: 16px;
   border-bottom: 1px solid var(--color-primary-100);
@@ -49,12 +65,6 @@
   color: var(--color-primary-700);
 }
 
-.profileButtonWrapper {
-  display: flex;
-  gap: 16px;
-  padding: 0 0 var(--space-2) var(--space-1);
-}
-
 .profilePosts {
   display: flex;
   flex-direction: column;
@@ -63,8 +73,7 @@
 
 @media screen and (min-width: 768px) {
   .profileWrapper {
-    max-width: 50vw;
-    margin-right: auto;
-    margin-left: auto;
+    width: 650px;
+    padding-left: var(--space-6);
   }
 }

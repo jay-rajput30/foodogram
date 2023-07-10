@@ -36,6 +36,9 @@ const PostCard = ({ post }) => {
   const dateFormat = new Date(post.created_at);
   const postCardClickHandler = (profileId) => {
     navigate(`/profile/${profileId}`);
+    if (userLoginDetails.userId === profileId) {
+      navigate("/profile");
+    }
   };
 
   const bookmarkItemFound = userLoginDetails?.loggedInProfile?.bookmarks.some(
@@ -44,6 +47,11 @@ const PostCard = ({ post }) => {
   const commentBtnClickHandler = () => {
     navigate(`/post/${post.id}`);
   };
+  const userFound = post.likes.find(
+    (like) => like.userId === userLoginDetails.userId
+  );
+
+  console.log;
   return (
     <article className={styles.postCardWrapper}>
       <div className={styles.postCardHeader}>
@@ -74,6 +82,7 @@ const PostCard = ({ post }) => {
             onClick={() =>
               likeBtnClickHandler(userLoginDetails?.userId, post?.id)
             }
+            fill={`${userFound ? "hsl(23, 49%, 35%)" : "whitesmoke"}`}
           />
           {post.likes?.length}
         </span>

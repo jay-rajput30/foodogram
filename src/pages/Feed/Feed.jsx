@@ -30,20 +30,6 @@ const Feed = () => {
 
   const fetchPosts = async () => {
     try {
-      // const { data: allPostsData, allPostsError } = await supabase
-      //   .from("posts")
-      //   .select("*");
-
-      // const { data, error } = await supabase
-      //   .from("profile")
-      //   .select()
-      //   .eq("userId", userLoginDetails?.userId);
-
-      // const { data: postData, postError } = await supabase
-      //   .from("posts")
-      //   .select()
-      //   .in("userId", [...data[0].following, userLoginDetails?.userId]);
-
       const { data: suggestedProfileData, success } =
         await getSuggestProfiles();
 
@@ -77,7 +63,7 @@ const Feed = () => {
     }
   };
   const sortedData = getSortedData(allPosts, postFilterOption);
-  console.log({ sortedData });
+
   return (
     <div className={styles.feedWrapper}>
       {!checkPath && <MobileNavbar />}

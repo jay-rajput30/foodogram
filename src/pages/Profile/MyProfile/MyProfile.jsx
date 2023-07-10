@@ -7,7 +7,7 @@ import { getPosts } from "../../../../backend/controllers/post.controller";
 import EditProfileForm from "../../../components/EditProfileForm/EditProfileForm";
 import { usePost } from "../../../context/PostProvider";
 import { checkPageLocation } from "../../../utils/utls,";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import MobileNavbar from "../../../components/Navbar/MobileNavbar/MobileNavbar";
 import DesktopNavbar from "../../../components/Navbar/DesktopNavbar/DesktopNavbar";
 
@@ -19,7 +19,7 @@ const MyProfile = () => {
   const { postToggle } = usePost();
   const location = useLocation();
   const checkPath = checkPageLocation(location.pathname);
-
+  const navigate = useNavigate();
   const fetchProfile = async () => {
     try {
       const { data, success } = await getProfile(userLoginDetails?.userId);
@@ -43,6 +43,10 @@ const MyProfile = () => {
     setShowEditForm(true);
   };
 
+  const bookmarkBtnClickHandler = () => {
+    navigate("/bookmark");
+  };
+
   return (
     <div className={styles.myProfileWrapper}>
       {!checkPath && <MobileNavbar />}
@@ -53,7 +57,15 @@ const MyProfile = () => {
             <img src={profileData?.profileImg} alt={profileData?.profileImg} />
           </figure>
           <div>
-            <h2>{profileData?.firstName + " " + profileData?.lastName}</h2>
+            <h2>
+              {profileData?.firstName + " " + profileData?.lastName}
+              <span>
+                <small className={styles.profileDetailsUsername}>
+                  {" "}
+                  @{profileData?.username}
+                </small>
+              </span>
+            </h2>
             <div className={styles.profileDetailsFollowerWrapper}>
               <div>
                 <h4>followers</h4>
@@ -71,7 +83,7 @@ const MyProfile = () => {
           <button onClick={() => editBtnClickHandler(profileData.userId)}>
             edit profile
           </button>
-          <button>bookmarks</button>
+          <button onClick={bookmarkBtnClickHandler}>bookmarks</button>
         </div>
         <section className={styles.profilePosts}>
           {profilePosts?.map((post) => {
