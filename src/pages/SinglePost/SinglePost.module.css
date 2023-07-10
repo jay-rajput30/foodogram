@@ -1,5 +1,6 @@
 .singlePostMainWrapper {
   display: flex;
+  height: 100%;
 }
 
 .singlePostHeading {

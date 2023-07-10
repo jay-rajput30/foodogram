@@ -202,3 +202,29 @@ export const updateComment = async (commentData, user) => {
     return { success: false, data: null, error: e };
   }
 };
+
+export const deletePost = async (postId) => {
+  try {
+    const { error } = await supabase.from("posts").delete().eq("id", postId);
+    if (!error) {
+      return { success: true, data: "post deleted", error: null };
+    }
+  } catch (e) {
+    return { success: false, data: null, error: e };
+  }
+};
+
+export const updatePost = async (postId, updatedText) => {
+  try {
+    const { data: updatedPostData, updatedPostError } = await supabase
+      .from("posts")
+      .update({ text: updatedText })
+      .eq("id", postId)
+      .select("*");
+    if (!updatedPostError) {
+      return { success: true, data: updatedPostData, error: null };
+    }
+  } catch (e) {
+    return { success: false, error: e, data: null };
+  }
+};

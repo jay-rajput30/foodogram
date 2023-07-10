@@ -1,7 +1,15 @@
 import React from "react";
 import styles from "./PostCard.module.css";
 import { supabase } from "../../../../backend/db/db.connect";
-import { Bookmark, MessageSquare, Share, ThumbsUp } from "react-feather";
+import {
+  Bookmark,
+  Edit2,
+  MessageSquare,
+  MoreVertical,
+  Share,
+  ThumbsUp,
+  Trash2,
+} from "react-feather";
 import { updateLikes } from "../../../../backend/controllers/post.controller";
 import { useAuth } from "../../../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
@@ -51,7 +59,6 @@ const PostCard = ({ post }) => {
     (like) => like.userId === userLoginDetails.userId
   );
 
-  console.log;
   return (
     <article className={styles.postCardWrapper}>
       <div className={styles.postCardHeader}>
@@ -66,6 +73,12 @@ const PostCard = ({ post }) => {
               dateFormat.toLocaleTimeString()}
           </small>
         </div>
+        {post.userId === userLoginDetails.userId && (
+          <div className={styles.moreIcon}>
+            <Edit2 size="16" />
+            <Trash2 size="16" />
+          </div>
+        )}
       </div>
       <div className={styles.postCardBody}>
         <p>{post?.text}</p>

@@ -1,6 +1,7 @@
 .bookmarkWrapper {
   display: flex;
   gap: 8px;
+  height: 100%;
 }
 
 .bookmarkPostsWrapper {
@@ -24,6 +25,8 @@
     max-width: 650px;
     margin-left: auto;
     margin-right: auto;
+    overflow-x: auto;
+    /* padding-bottom: var(--space-5); */
   }
   .bookmarkWrapper {
     padding-right: var(--space-2);
