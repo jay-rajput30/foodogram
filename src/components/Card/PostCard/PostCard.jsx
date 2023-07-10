@@ -10,7 +10,10 @@ import {
   ThumbsUp,
   Trash2,
 } from "react-feather";
-import { updateLikes } from "../../../../backend/controllers/post.controller";
+import {
+  deletePost,
+  updateLikes,
+} from "../../../../backend/controllers/post.controller";
 import { useAuth } from "../../../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { usePost } from "../../../context/PostProvider";
@@ -58,6 +61,16 @@ const PostCard = ({ post }) => {
   const userFound = post.likes.find(
     (like) => like.userId === userLoginDetails.userId
   );
+  const deleteBtnClickHandler = async () => {
+    try {
+      const { success, data } = await deletePost(post.id);
+      if (success) {
+        setPostToggle((prev) => !prev);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <article className={styles.postCardWrapper}>
@@ -76,7 +89,7 @@ const PostCard = ({ post }) => {
         {post.userId === userLoginDetails.userId && (
           <div className={styles.moreIcon}>
             <Edit2 size="16" />
-            <Trash2 size="16" />
+            <Trash2 size="16" onClick={deleteBtnClickHandler} />
           </div>
         )}
       </div>

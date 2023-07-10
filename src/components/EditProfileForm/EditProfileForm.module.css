@@ -5,6 +5,7 @@
   border: 2px solid var(--color-primary-700);
   border-radius: 5px;
   padding: var(--space-2);
+  z-index: 1000;
 }
 .EditProfileFormWrapper > form {
   padding: var(--space-1);
