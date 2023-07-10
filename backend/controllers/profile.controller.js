@@ -98,6 +98,7 @@ export const updateProfile = async (profileId, updatedProfile) => {
         lastName: updatedProfile.lastName,
         profileImg: updatedProfile.profileImg,
         bio: updatedProfile.bio,
+        portfolioUrl: updatedProfile.portfolioUrl,
       })
       .eq("userId", profileId);
 

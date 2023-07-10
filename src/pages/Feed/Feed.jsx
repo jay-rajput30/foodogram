@@ -19,6 +19,7 @@ const Feed = () => {
   const {
     userPosts,
     setUserPost,
+    postToggle,
     setPostToggle,
     allPosts,
     setAllPosts,
@@ -34,8 +35,6 @@ const Feed = () => {
         await getSuggestProfiles();
 
       if (success) {
-        // setUserPost(postData[0]);
-        // setAllPosts(allPostsData[0]);
         setSuggestedProfiles(suggestedProfileData);
         setPostToggle((prev) => !prev);
       }
@@ -43,6 +42,7 @@ const Feed = () => {
       console.log(e);
     }
   };
+  console.log({ userPosts });
   useEffect(() => {
     fetchPosts();
   }, []);
@@ -62,7 +62,7 @@ const Feed = () => {
         return data;
     }
   };
-  const sortedData = getSortedData(allPosts, postFilterOption);
+  const sortedData = getSortedData(userPosts, postFilterOption);
 
   return (
     <div className={styles.feedWrapper}>

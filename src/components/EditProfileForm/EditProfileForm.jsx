@@ -10,6 +10,7 @@ const EditProfileForm = ({ profile, setShowEditForm }) => {
     lastName: profile.lastName,
     profileImg: profile.profileImg,
     bio: profile.bio,
+    portfolioUrl: profile.portfolioUrl,
   });
   const { setPostToggle } = usePost();
   const editProfileFormSubmitHandler = async (e) => {
@@ -25,7 +26,7 @@ const EditProfileForm = ({ profile, setShowEditForm }) => {
     setPostToggle((prev) => !prev);
     setShowEditForm(false);
   };
-
+  console.log({ editProfileFormData });
   return (
     <div className={styles.EditProfileFormWrapper}>
       <h2>Edit Profile</h2>
@@ -86,6 +87,17 @@ const EditProfileForm = ({ profile, setShowEditForm }) => {
             })
           }
         ></textarea>
+        <input
+          type="text"
+          placeholder="enter new portfolio url"
+          value={editProfileFormData.portfolioUrl}
+          onChange={(e) =>
+            setEditProfileFormData({
+              ...editProfileFormData,
+              portfolioUrl: e.target.value,
+            })
+          }
+        />
         <div className={styles.editFormButtonWrapper}>
           <button type="submit">update</button>
           <button onClick={() => setShowEditForm(false)}>cancel</button>

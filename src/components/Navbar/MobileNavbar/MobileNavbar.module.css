@@ -8,6 +8,7 @@
   justify-content: space-between;
   background-color: var(--color-primary-100);
   box-shadow: -2px -4px 4px var(--color-primary-700);
+  z-index: 90;
 }
 .mobileNavbarWrapper > * {
   cursor: pointer;

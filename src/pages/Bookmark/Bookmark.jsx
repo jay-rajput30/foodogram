@@ -34,9 +34,13 @@ const Bookmark = () => {
       {!checkPath && <MobileNavbar />}
       {!checkPath && <DesktopNavbar />}
       <div className={styles.bookmarkPostsWrapper}>
-        {userLoginDetails?.loggedInProfile?.bookmarks.map((item) => {
-          return <PostCard post={item} key={item.id} />;
-        })}
+        {userLoginDetails?.loggedInProfile?.bookmarks.length === 0 ? (
+          <p className={styles.emptyBookmarkText}>please bookmark some posts</p>
+        ) : (
+          userLoginDetails?.loggedInProfile?.bookmarks.map((item) => {
+            return <PostCard post={item} key={item.id} />;
+          })
+        )}
       </div>
       <div className={styles.feedMoreOptions}>
         <h2>Suggested profiles</h2>

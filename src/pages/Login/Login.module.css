@@ -47,6 +47,13 @@
   flex: 1;
 }
 
+.loginBtnWrapper {
+  display: flex;
+  gap: 8px;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
 @media screen and (min-width: 768px) {
   .loginFormWrapper {
     max-width: 30vw;

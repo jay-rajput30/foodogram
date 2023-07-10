@@ -83,6 +83,9 @@ const Profile = () => {
           </div>
         </section>
         <p>{profileData?.bio}</p>
+        {profileData?.portfolioUrl && (
+          <p>portfolio: {profileData?.portfolioUrl}</p>
+        )}
         <div className={styles.profileDetailsFollowerWrapper}>
           <div>
             <h4>followers</h4>
