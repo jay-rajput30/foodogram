@@ -3,11 +3,13 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 100%;
 }
 
 .myProfileWrapper {
   display: flex;
   justify-content: flex-start;
+  width: 100%;
 }
 .profileWrapper > p {
   padding: 0 0 var(--space-1) var(--space-2);
@@ -43,7 +45,9 @@
 .profileDetails > div h2 {
   color: var(--color-primary-700);
 }
-
+.profileDetailsUsername {
+  color: var(--color-primary-100);
+}
 .profileDetailsFollowerWrapper {
   display: flex;
   gap: 16px;
@@ -76,7 +80,10 @@
 @media screen and (min-width: 768px) {
   .profileWrapper {
     margin: var(--space-1);
-    width: 650px;
+    max-width: 650px;
     padding-left: var(--space-6);
+  }
+  .myProfileWrapper {
+    width: 100%;
   }
 }

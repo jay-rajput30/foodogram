@@ -64,16 +64,16 @@ const Profile = () => {
           </figure>
           <div>
             <h2>{profileData?.firstName + " " + profileData?.lastName}</h2>
-            <div className={styles.profileButtonWrapper}>
-              <button onClick={followBtnClickHandler}>
-                {profileData.followers?.some(
-                  (item) => item.userId === userLoginDetails.userId
-                )
-                  ? "unfollow"
-                  : "follow"}
-                {/* follow */}
-              </button>
-            </div>
+            <small>@{profileData?.username}</small>
+
+            <button onClick={followBtnClickHandler}>
+              {profileData.followers?.some(
+                (item) => item.userId === userLoginDetails.userId
+              )
+                ? "unfollow"
+                : "follow"}
+              {/* follow */}
+            </button>
           </div>
         </section>
         <p>{profileData?.bio}</p>

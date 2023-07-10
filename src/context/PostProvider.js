@@ -16,7 +16,7 @@ const PostProvider = ({ children }) => {
       const { data: allPostsData, allPostsError } = await supabase
         .from("posts")
         .select("*");
-      console.log({ allPostsData });
+
       const { data: profileData, error } = await supabase
         .from("profile")
         .select("*")

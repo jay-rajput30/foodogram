@@ -57,7 +57,15 @@ const MyProfile = () => {
             <img src={profileData?.profileImg} alt={profileData?.profileImg} />
           </figure>
           <div>
-            <h2>{profileData?.firstName + " " + profileData?.lastName}</h2>
+            <h2>
+              {profileData?.firstName + " " + profileData?.lastName}
+              <span>
+                <small className={styles.profileDetailsUsername}>
+                  {" "}
+                  @{profileData?.username}
+                </small>
+              </span>
+            </h2>
             <div className={styles.profileDetailsFollowerWrapper}>
               <div>
                 <h4>followers</h4>
