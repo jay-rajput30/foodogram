@@ -78,7 +78,6 @@ const Profile = () => {
               )
                 ? "unfollow"
                 : "follow"}
-              {/* follow */}
             </button>
           </div>
         </section>

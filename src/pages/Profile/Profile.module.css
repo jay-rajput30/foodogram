@@ -12,10 +12,12 @@
 
 .profileWrapper {
   margin-top: var(--space-2);
+  padding: 0 var(--space-2);
   display: flex;
   flex-direction: column;
   gap: 16px;
   width: 100%;
+  overflow: auto;
 }
 .profileWrapper > p {
   padding: 0 0 var(--space-1) var(--space-1);

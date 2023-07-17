@@ -6,7 +6,7 @@ const ProfileCard = ({ profile }) => {
   const detailsBtnClickHandler = () => {
     navigate(`/profile/${profile.userId}`);
   };
-  console.log({ profile });
+
   return (
     <article className={styles.profileCardWrapper}>
       <figure>
