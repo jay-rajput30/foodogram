@@ -42,7 +42,7 @@ const Feed = () => {
       console.log(e);
     }
   };
-  console.log({ userPosts });
+
   useEffect(() => {
     fetchPosts();
   }, []);

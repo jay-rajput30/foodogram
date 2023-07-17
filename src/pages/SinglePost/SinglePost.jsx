@@ -78,6 +78,9 @@ const SinglePost = () => {
           </header>
           <main className={styles.singlePostMain}>
             <p>{singlePost?.text}</p>
+            <figure className={styles.singlePostImgWrapper}>
+              <img src={singlePost?.postImgUrl} alt={singlePost?.postImgUrl} />
+            </figure>
           </main>
           <footer className={styles.singlePostFooter}>
             <div>
