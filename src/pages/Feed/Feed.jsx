@@ -39,7 +39,7 @@ const Feed = () => {
         setPostToggle((prev) => !prev);
       }
     } catch (e) {
-      console.log(e);
+      e;
     }
   };
 

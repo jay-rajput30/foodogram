@@ -20,7 +20,7 @@ const MyProfile = () => {
   const location = useLocation();
   const checkPath = checkPageLocation(location.pathname);
   const navigate = useNavigate();
-  console.log({ profileData });
+
   const fetchProfile = async () => {
     try {
       const { data, success } = await getProfile(userLoginDetails?.userId);

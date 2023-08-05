@@ -6,7 +6,7 @@ import { updateComment } from "../../../backend/controllers/post.controller";
 const AddCommentForm = ({ postId, setSinglePost }) => {
   const { userLoginDetails } = useAuth();
 
-  console.log({ userLoginDetails });
+  ({ userLoginDetails });
   const commentFormSubmitHandler = async (e) => {
     try {
       e.preventDefault();
@@ -15,7 +15,7 @@ const AddCommentForm = ({ postId, setSinglePost }) => {
         userLoginDetails.loggedInProfile
       );
       if (success) {
-        console.log({ data });
+        ({ data });
         setSinglePost(data);
       }
     } catch (e) {

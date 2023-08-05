@@ -35,7 +35,7 @@ const PostProvider = ({ children }) => {
         setAllPosts([...allPostsData]);
       }
     } catch (e) {
-      console.log(e);
+      e;
     }
   };
   useEffect(() => {

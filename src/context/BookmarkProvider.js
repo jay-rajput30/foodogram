@@ -21,7 +21,7 @@ const BookmarkProvider = ({ children }) => {
             bookmarks: data,
           },
         });
-        console.log({ data });
+        ({ data });
       }
     } catch (e) {
       console.error({ error: e });
@@ -37,8 +37,7 @@ const BookmarkProvider = ({ children }) => {
 export default BookmarkProvider;
 
 export const useBookmark = () => {
-  const {   bookmarkBtnClickHandler } =
-    useContext(bookmarkContext);
+  const { bookmarkBtnClickHandler } = useContext(bookmarkContext);
 
-  return {  bookmarkBtnClickHandler };
+  return { bookmarkBtnClickHandler };
 };

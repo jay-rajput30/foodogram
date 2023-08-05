@@ -26,7 +26,7 @@ const EditProfileForm = ({ profile, setShowEditForm }) => {
     setPostToggle((prev) => !prev);
     setShowEditForm(false);
   };
-  console.log({ editProfileFormData });
+  ({ editProfileFormData });
   return (
     <div className={styles.EditProfileFormWrapper}>
       <h2>Edit Profile</h2>
