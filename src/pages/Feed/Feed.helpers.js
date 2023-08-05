@@ -6,7 +6,7 @@ export const postFileUploadChangeHandler = async (
   userId,
   newPostDetails
 ) => {
-  console.log({ target: e.target.files[0] });
+  ({ target: e.target.files[0] });
   const postImage = e.target.files[0];
   const { data, error } = await supabase.storage
     .from("posts")

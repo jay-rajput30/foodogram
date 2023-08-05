@@ -23,7 +23,7 @@ export const signUpUser = async (userDetails) => {
       .select();
 
     if (!error && !profileError) {
-      console.log({
+      ({
         token: data.session.access_token,
         email: data.user.email,
         useId: data.user.id,

@@ -69,39 +69,42 @@ const NewPost = () => {
     e.preventDefault();
 
     const postImage = e.target[1].files[0];
-    const { data, error } = await supabase.storage
-      .from("posts")
-      .upload(
-        `${postImage?.name.split(".")[0]}-${userLoginDetails?.userId}.${
-          postImage?.type.split("/")[1]
-        }`,
-        postImage
-      );
-    if (!error) {
-      const { data: image_url } = await supabase.storage
+    if (postImage) {
+      const { data, error } = await supabase.storage
         .from("posts")
-        .getPublicUrl(data?.path);
+        .upload(
+          `${postImage?.name.split(".")[0]}-${userLoginDetails?.userId}.${
+            postImage?.type.split("/")[1]
+          }`,
+          postImage
+        );
+      if (!error) {
+        const { data: image_url } = await supabase.storage
+          .from("posts")
+          .getPublicUrl(data?.path);
 
-      setNewPostDetails({
-        ...newPostDetails,
-        postImgUrl: image_url.publicUrl,
-      });
-
-      const { success } = await createPost({
-        ...newPostDetails,
-        postImgUrl: image_url.publicUrl ?? null,
-      });
-      if (success) {
         setNewPostDetails({
-          userId: userLoginDetails?.userId,
-          text: "",
-          likes: [],
-          comments: [],
-          postImgUrl: null,
+          ...newPostDetails,
+          postImgUrl: image_url.publicUrl,
         });
-        setImgUploaded("");
-        setPostToggle((prev) => !prev);
       }
+    }
+    const { success } = await createPost({
+      ...newPostDetails,
+      postImgUrl: null,
+      postImgUrl: null,
+      postImgUrl: newPostDetails.postImgUrl ?? null,
+    });
+    if (success) {
+      setNewPostDetails({
+        userId: userLoginDetails?.userId,
+        text: "",
+        likes: [],
+        comments: [],
+        postImgUrl: null,
+      });
+      setImgUploaded("");
+      setPostToggle((prev) => !prev);
     }
   };
 

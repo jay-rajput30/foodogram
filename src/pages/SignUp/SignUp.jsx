@@ -34,15 +34,15 @@ const SignUp = () => {
         .from("profile")
         .select("*")
         .eq("username", formData.username);
-      console.log({ usernameData });
+      ({ usernameData });
       if (usernameData[0]) {
-        console.log("username exists");
+        ("username exists");
         setValidUsername(false);
         return;
       }
 
       setValidUsername(true);
-      console.log("username does not exists");
+      ("username does not exists");
       const { data, success } = await signUpUser({
         email: formData?.email,
         password: formData?.password,
@@ -59,7 +59,7 @@ const SignUp = () => {
       console.error(e);
     }
   };
-  console.log(errors);
+  errors;
   return (
     <div className={styles.signUpWrapper}>
       <form

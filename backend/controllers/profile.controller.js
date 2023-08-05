@@ -76,7 +76,6 @@ export const getProfile = async (profileId) => {
       .select("*")
       .eq("userId", profileId);
     if (!error) {
-      console.log({ profile });
       return { success: true, data: profile[0], error: null };
     }
   } catch (e) {
