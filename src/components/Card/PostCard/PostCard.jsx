@@ -48,7 +48,7 @@ const PostCard = ({ post }) => {
   const postCardClickHandler = (profileId) => {
     navigate(`/profile/${profileId}`);
     if (userLoginDetails.userId === profileId) {
-      navigate("/profile");
+      navigate(" /profile");
     }
   };
 
